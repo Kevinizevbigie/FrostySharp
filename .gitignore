@@ -1,0 +1,6 @@
+*.swp
+*.csv
+bin/
+src/Frosty.Application
+src/Frosty.Api
+src/Frosty.Infrastructure

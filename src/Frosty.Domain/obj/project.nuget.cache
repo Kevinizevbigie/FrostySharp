@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zWY1c7kpxhU=",
+  "success": true,
+  "projectFilePath": "/home/vinn/projects/DotNet/Frosty/src/Frosty.Domain/Frosty.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/vinn/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
