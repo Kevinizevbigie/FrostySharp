@@ -27,5 +27,11 @@ public class Result<T> {
         return new Result<T>(value, isSuccess, error);
     }
 
+    // TODO: Add the failure static function
+    // TODO: create the error object with a name and descr.
+    // TODO: I don't think T is a good name for the generic type - change.
+    // TODO: Need to validate against success with error object not none.
+    // TODO: Need to be able to return a result object without a value...? For example, for failed results, we only need the error object, not the value
+
 
 }
