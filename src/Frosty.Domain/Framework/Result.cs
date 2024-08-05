@@ -9,6 +9,12 @@ public class Result {
     public bool IsFailure => !IsSuccess;
 
     protected Result(bool isSuccess, Error error) {
+
+        // error must be none if success is true
+        if (isSuccess == true && error != Error.None) {
+            throw new InvalidOperationException();
+        }
+
         IsSuccess = isSuccess;
         Error = error;
     }
@@ -47,11 +53,5 @@ public class Result<TVal> : Result {
         _value = value;
 
     }
-
-
-
-    // TODO: Need to validate against success with error object not none.
-    // TODO: Need to be able to return a result object without a value...? For example, for failed results, we only need the error object, not the value
-
 
 }
