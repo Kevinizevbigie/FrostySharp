@@ -15,5 +15,4 @@ public sealed class Error {
     public static Error None = new Error(
         string.Empty,
         string.Empty);
-
 }
