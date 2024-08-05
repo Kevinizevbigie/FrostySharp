@@ -3,21 +3,29 @@ namespace Frosty.Domain.Framework;
 
 public class Result {
 
-}
-
-public class Result<TVal> {
-
-    public readonly TVal _value;
     public Error Error;
     public bool IsSuccess;
 
     public bool IsFailure => !IsSuccess;
 
+    protected Result(bool isSuccess, Error error) {
 
-    private Result(TVal value, bool isSuccess, Error error) {
-        _value = value;
         IsSuccess = isSuccess;
         Error = error;
+    }
+}
+
+public class Result<TVal> : Result {
+
+    public readonly TVal _value;
+
+    private Result(
+        TVal value,
+        bool isSuccess,
+        Error error) : base(isSuccess, error) {
+
+        _value = value;
+
     }
 
     // Create a new success result object which encapsulates
