@@ -10,10 +10,16 @@ abstract class Entity {
         Id = id;
     }
 
+    // return all domain events for an entity
+    // NOTE: these will be looped through and published
+    // in the application or infrastructure layer. Decide later.
+    // Most likly to be done with mediator IPublisher
+    public IReadOnlyList<IDomainEvent> GetDomainEvents() {
+        return domainEvents.ToList();
+    }
 
     // this will be needed later to allow EF core to run
     // migrations. It remains blank.
     protected Entity() {
-
     }
 }
