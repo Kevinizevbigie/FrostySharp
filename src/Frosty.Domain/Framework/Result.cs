@@ -1,6 +1,10 @@
 
 namespace Frosty.Domain.Framework;
 
+public class Result {
+
+}
+
 public class Result<TVal> {
 
     public readonly TVal _value;
@@ -28,7 +32,6 @@ public class Result<TVal> {
 
     // TODO: Add the failure static function
     // TODO: create the error object with a name and descr.
-    // TODO: I don't think T is a good name for the generic type - change.
     // TODO: Need to validate against success with error object not none.
     // TODO: Need to be able to return a result object without a value...? For example, for failed results, we only need the error object, not the value
 
