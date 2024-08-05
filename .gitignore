@@ -1,6 +1,7 @@
 *.swp
 *.csv
 bin/
+obj/
 src/Frosty.Application
 src/Frosty.Api
 src/Frosty.Infrastructure
