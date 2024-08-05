@@ -1,7 +1,7 @@
 
 namespace Frosty.Domain.Framework;
 
-abstract class Entity {
+public abstract class Entity {
 
     private readonly List<IDomainEvent> domainEvents = new();
     public Guid Id { get; init; }
@@ -16,6 +16,14 @@ abstract class Entity {
     // Most likly to be done with mediator IPublisher
     public IReadOnlyList<IDomainEvent> GetDomainEvents() {
         return domainEvents.ToList();
+    }
+
+    public void ClearAllDomainEvents() {
+        domainEvents.Clear();
+    }
+
+    protected void AddDomainEvent(IDomainEvent domainEvent) {
+        domainEvents.Add(domainEvent);
     }
 
     // this will be needed later to allow EF core to run
