@@ -27,8 +27,8 @@ public sealed class Record : Entity {
 
     public List<Comment> Comments { get; private set; }
 
-    public string Niche { get; private set; }
-    public string NicheType { get; private set; }
+    // public string Niche { get; private set; }
+    // public string NicheType { get; private set; }
 
     public DateTime CreateDate { get; private set; }
     public string EmailLog { get; private set; }
