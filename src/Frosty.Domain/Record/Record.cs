@@ -19,8 +19,9 @@ public sealed class Record : Entity {
     // multiple companies
     public string Website { get; private set; }
 
-    public string VerifyFileId { get; private set; }
-    public string EmailVerifyDate { get; private set; }
+    public string EmailVerifyId { get; private set; }
+    public DateTime EmailVerifyDate { get; private set; }
+
     public LeadStatus LeadStatus { get; private set; }
 
     public string Comments { get; private set; }
