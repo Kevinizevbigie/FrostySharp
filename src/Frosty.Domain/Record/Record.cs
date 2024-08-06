@@ -34,8 +34,21 @@ public sealed class Record : Entity {
 
     // NOTE: if the verification or website service failed, Reject.
     public DateTime RejectDate { get; private set; }
-    public string EmailLog { get; private set; }
-    public string EmailCounter { get; private set; }
+    public List<EmailLog> EmailLogs { get; private set; }
+    public int EmailCounter { get; private set; }
+
+}
+
+// An email log records when and how often an email has been sent
+public sealed record EmailLog {
+
+    public string Name;
+    public DateTime LastDateEmailUtc;
+
+    public EmailLog(DateTime emailDate) {
+        LastDateEmailUtc = emailDate;
+        Name = "Email Sent at " + LastDateEmailUtc;
+    }
 
 }
 
