@@ -5,8 +5,11 @@ namespace Frosty.Domain.Record;
 public sealed class Record : Entity {
 
     public Record(
-        Guid id
+        Guid id,
+        LeadStatus ls
     ) : base(id) {
+
+        LeadStatus = ls;
 
     }
 
@@ -30,6 +33,9 @@ public sealed class Record : Entity {
 
     public string CreateDate { get; private set; }
     public string EmailLog { get; private set; }
+    public string EmailCounter { get; private set; }
+
+
 }
 
 // NOTE: Potential Value Objects
@@ -45,6 +51,24 @@ public enum LeadStatus {
     EmailVerified = 4,
     Emailed = 5,
 }
+
+public class Testing() {
+
+//     public void func() {
+//         var now = new Record(Guid.NewGuid(), LeadStatus.New);
+//     }
+}
+
+
+// public struct LeadStatus2 {
+
+//     public static string New = "new record";
+//     public static string NameFound = "new record";
+//     public static string EmailFound = "new record";
+//     public static string EmailVerified = "new record";
+//     public static string Emailed = "new record";
+// }
+
 
 // Contact Details - value object - FN/LN/Email
 // secondary contacts - list of value model
