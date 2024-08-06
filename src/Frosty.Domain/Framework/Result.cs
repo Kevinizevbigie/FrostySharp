@@ -53,5 +53,4 @@ public class Result<TVal> : Result {
         _value = value;
 
     }
-
 }
