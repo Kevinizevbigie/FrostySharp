@@ -17,7 +17,7 @@ public sealed class Record : Entity {
 
     // The website is the unique field as a person can own
     // multiple companies
-    public string Website { get; private set; }
+    public Website Website { get; private set; }
 
     public string EmailVerifyId { get; private set; }
     public DateTime EmailVerifyDate { get; private set; }
@@ -30,7 +30,7 @@ public sealed class Record : Entity {
     public string Niche { get; private set; }
     public string NicheType { get; private set; }
 
-    public string CreateDate { get; private set; }
+    public DateTime CreateDate { get; private set; }
     public string EmailLog { get; private set; }
     public string EmailCounter { get; private set; }
 
@@ -42,6 +42,9 @@ public sealed class Record : Entity {
 // public sealed record ContactInfo();
 // public sealed record VerificationDetails();
 // public sealed record ContactInfo();
+
+
+public sealed record Website(string Value);
 
 public sealed record ContactInfo(
     string Firstname,
