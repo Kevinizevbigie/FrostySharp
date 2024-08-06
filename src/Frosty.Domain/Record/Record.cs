@@ -44,13 +44,28 @@ public sealed class Record : Entity {
     public List<EmailLog>? EmailLogs { get; private set; }
     public int? EmailCounter { get; private set; }
 
+    //NOTE: Planning Functions inside The Record Entity
+    // 1. Send email
+    // Helper Service required to send emails
+
+
+    // Only the website test should happen here.
+    // EmailVerification is a slow process. It's also limited by one thread.
+    public void VerifyNewRecord(
+        Result<WebsiteTest> websiteTest
+        // Result<EmailVerification> emailVerification
+    ) {
+
+        // TODO: in app layer, if either test failed to complete
+        // this function will not be reached.
+
+
+        // update verify data
+        EmailVerifyDate = Utc.Now();
+
+    }
+
 }
-
-
-
-
-
-
 
 // NOTE: Potential Services
 // Email Verification Service - regex testing
