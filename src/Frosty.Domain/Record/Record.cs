@@ -14,6 +14,7 @@ public sealed class Record : Entity {
     }
 
     public ContactInfo ContactInfo { get; private set; }
+    public string SecondaryContacts { get; private set; }
 
     // The website is the unique field as a person can own
     // multiple companies
@@ -24,8 +25,7 @@ public sealed class Record : Entity {
 
     public LeadStatus LeadStatus { get; private set; }
 
-    public string Comments { get; private set; }
-    public string SecondaryContacts { get; private set; }
+    public List<Comment> Comments { get; private set; }
 
     public string Niche { get; private set; }
     public string NicheType { get; private set; }
@@ -34,7 +34,6 @@ public sealed class Record : Entity {
     public string EmailLog { get; private set; }
     public string EmailCounter { get; private set; }
 
-
 }
 
 // NOTE: Potential Value Objects
@@ -42,6 +41,10 @@ public sealed class Record : Entity {
 // public sealed record ContactInfo();
 // public sealed record VerificationDetails();
 // public sealed record ContactInfo();
+
+public sealed record Comment(
+    string Name,
+    string Description);
 
 
 public sealed record Website(string Value);
