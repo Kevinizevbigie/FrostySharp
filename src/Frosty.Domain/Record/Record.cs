@@ -31,6 +31,9 @@ public sealed class Record : Entity {
     // public string NicheType { get; private set; }
 
     public DateTime CreateDate { get; private set; }
+
+    // NOTE: if the verification or website service failed, Reject.
+    public DateTime RejectDate { get; private set; }
     public string EmailLog { get; private set; }
     public string EmailCounter { get; private set; }
 
@@ -60,6 +63,7 @@ public enum LeadStatus {
     EmailFound = 3,
     EmailVerified = 4,
     Emailed = 5,
+    Rejected = 6,
 }
 
 
