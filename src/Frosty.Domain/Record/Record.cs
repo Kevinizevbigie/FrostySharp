@@ -13,9 +13,7 @@ public sealed class Record : Entity {
 
     }
 
-    public string Firstname { get; private set; }
-    public string Lastname { get; private set; }
-    public string Email { get; private set; }
+    public ContactInfo ContactInfo { get; private set; }
 
     // The website is the unique field as a person can own
     // multiple companies
@@ -44,6 +42,11 @@ public sealed class Record : Entity {
 // public sealed record VerificationDetails();
 // public sealed record ContactInfo();
 
+public sealed record ContactInfo(
+    string Firstname,
+    string Lastname,
+    string? Email = null);
+
 public enum LeadStatus {
     New = 1,
     NameFound = 2,
@@ -52,12 +55,6 @@ public enum LeadStatus {
     Emailed = 5,
 }
 
-public class Testing() {
-
-//     public void func() {
-//         var now = new Record(Guid.NewGuid(), LeadStatus.New);
-//     }
-}
 
 
 // public struct LeadStatus2 {
