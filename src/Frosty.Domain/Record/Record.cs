@@ -66,25 +66,9 @@ public enum LeadStatus {
     Rejected = 6,
 }
 
-
-
-// public struct LeadStatus2 {
-
-//     public static string New = "new record";
-//     public static string NameFound = "new record";
-//     public static string EmailFound = "new record";
-//     public static string EmailVerified = "new record";
-//     public static string Emailed = "new record";
-// }
-
-
-// Contact Details - value object - FN/LN/Email
 // secondary contacts - list of value model
-// Lead status - enum
-// 
 
 
 // NOTE: Potential Services
-
 // Email Verification Service - regex testing
 // Website Verification Service - ping website for status code
