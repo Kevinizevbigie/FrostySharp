@@ -26,6 +26,7 @@ public sealed class Record : Entity {
     // The website is the unique field as a person can own
     // multiple companies
     public Website Website { get; private set; }
+    public Website WebsiteVerifyDate { get; private set; }
 
     public string? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
@@ -82,12 +83,34 @@ public sealed class Record : Entity {
 
     }
 
+
+    // records that are not ready to be added are simply ignored
     public void AddToSendingQueue() {
-        // Check if contact has a reject date or reject lead status 
-        // check if email counter is 0
-        // check if all contact info is present.
-        //  ==> If email is present, then email is verified
+
+        if (RejectDate is not null || LeadStatus == LeadStatus.Rejected) {
+            return;
+        }
+
+        if (EmailCounter > 0) {
+            return;
+        }
+
+        if (PrimaryContact.Firstname is null ||
+            PrimaryContact.Lastname is null ||
+            // If email is present, then email is verified
+            PrimaryContact.Email is null
+        ) {
+
+            return;
+        }
+
         // check if website verification is true
+        if (LeadStatus == LeadStatus.New) {
+            return;
+        }
+
         // if all these are true, change lead status to ReadyToSend
+        // TODO: doesn't exist yet
+        EmailQueue.Add(Id);
     }
 }
