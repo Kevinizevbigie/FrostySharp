@@ -1,5 +1,5 @@
-
 using Frosty.Domain.Framework;
+using Frosty.Domain.Record.Events;
 
 namespace Frosty.Domain.Record;
 
@@ -61,30 +61,32 @@ public sealed class Record : Entity {
             new ContactInfo(firstname, lastname, email),
             website,
             leadStatus,
-            Utc.Now()
+            DateTime.UtcNow
         );
 
-        record.RaiseDomainEvent(new RecordCreatedEvent(record.Id));
+        // Domain event will trigger website verification in
+        // application/Infra layer
+        record.AddDomainEvent(new RecordCreatedEvent(record.Id));
 
         return record;
 
     }
 
-    public void VerifyRecordWebsite(
-    Result<WebsiteTestResponse> websiteTest
-    ) {
+    // TODO: move below to infra/app layer
+    // public void VerifyRecordWebsite() {
 
-        // update verify data time to now
+    // update verify data time to now
 
-        // If result obj is not failed
-        // set lead status to NameFound
+    // If result obj is not failed
+    // set lead status to NameFound
 
 
-        // if the result obj is failed, 
-        // set reject timestamp
-        // set lead status to Rejected
+    // if the result obj is failed, 
+    // set reject timestamp
+    // set lead status to Rejected
+    // }
 
-    }
+
 
     // EmailVerification is a slow process. It's also limited by one thread.
     // NOTE: at the moment, the production system has this entire process
