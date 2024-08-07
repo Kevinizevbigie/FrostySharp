@@ -104,7 +104,11 @@ public sealed class Record : Entity {
     // }
 
     // Triggered by application service
-    public void UpdateVerificationList() {
+    public void UpdateVerificationList(
+        // list is returned by Send() in service interface
+        List<EmailVerificationResponse> res
+    ) {
+        EmailVerifyList = res;
 
     }
 
@@ -124,7 +128,6 @@ public sealed class Record : Entity {
 
         //TODO: add all variations
         guessList.Add(new EmailGuess(fn + ln + "@" + website));
-
 
         return guessList;
     }
