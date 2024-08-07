@@ -35,9 +35,6 @@ public sealed class Record : Entity {
 
     public List<Comment>? Comments { get; private set; }
 
-    // public string Niche { get; private set; }
-    // public string NicheType { get; private set; }
-
     public DateTime CreateDate { get; private set; }
 
     // NOTE: if the verification or website service failed, Reject.
@@ -105,8 +102,6 @@ public sealed class Record : Entity {
 
     }
 
-    // THOUGHT: instead of injecting a result object, why not inject a service object?
-    // OR - I think websiteverification can be a domain EVENT that triggers when a new record is created.
     // And Verification should be a service implemented in infrastructure but has an interface here...
 
 
