@@ -49,25 +49,45 @@ public sealed class Record : Entity {
     // Helper Service required to send emails
 
 
-    // Only the website test should happen here.
-    // EmailVerification is a slow process. It's also limited by one thread.
-    public void VerifyNewRecord(
-        Result<WebsiteTest> websiteTest
-        // Result<EmailVerification> emailVerification
+    public void VerifyRecordWebsite(
+    Result<WebsiteTestResponse> websiteTest
     ) {
 
-        // TODO: in app layer, if either test failed to complete
-        // this function will not be reached.
+        // update verify data time to now
+
+        // If result obj is not failed
+        // set lead status to NameFound
 
 
-        // update verify data
-        EmailVerifyDate = Utc.Now();
+        // if the result obj is failed, 
+        // set reject timestamp
+        // set lead status to Rejected
 
     }
 
-}
+    // EmailVerification is a slow process. It's also limited by one thread.
+    // NOTE: at the moment, the production system has this entire process
+    // running as a microservice managed by RabbitMQ
+    public void VerifyRecordEmail(
+    Result<EmailVerificationResponse> emailVerification
+    ) {
 
-// NOTE: Potential Services
-// Email Verification Service - regex testing
-// Website Verification Service - ping website for status code
-// Increase email counter
+        // If result obj is not failed
+        // set lead status to EmailFound
+        // set email verify date
+        // set email verify id/file id
+
+        // if the result obj is failed, 
+        // set reject timestamp
+
+    }
+
+    public void AddToSendingQueue() {
+        // Check if contact has a reject date or reject lead status 
+        // check if email counter is 0
+        // check if all contact info is present.
+        //  ==> If email is present, then email is verified
+        // check if website verification is true
+        // if all these are true, change lead status to ReadyToSend
+    }
+}

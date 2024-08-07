@@ -6,6 +6,7 @@ public enum LeadStatus {
     NameFound = 2,
     EmailFound = 3,
     EmailVerified = 4,
-    Emailed = 5,
-    Rejected = 6,
+    ReadyToSend = 5,
+    Emailed = 6,
+    Rejected = 7,
 }
