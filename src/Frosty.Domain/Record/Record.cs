@@ -5,7 +5,7 @@ namespace Frosty.Domain.Record;
 
 public sealed class Record : Entity {
 
-    public Record(
+    private Record(
         Guid id,
         ContactInfo primaryContact,
         Website website,
@@ -45,10 +45,30 @@ public sealed class Record : Entity {
     public List<EmailLog>? EmailLogs { get; private set; }
     public int? EmailCounter { get; private set; }
 
-    //NOTE: Planning Functions inside The Record Entity
-    // 1. Send email
-    // Helper Service required to send emails
 
+    public static Record Create(
+        string firstname,
+        string lastname,
+        string email,
+        Website website,
+        DateTime createDate,
+        LeadStatus leadStatus = LeadStatus.New,
+        List<ContactInfo>? secondaryContacts = null
+    ) {
+
+        var record = new Record(
+            Guid.NewGuid(),
+            new ContactInfo(firstname, lastname, email),
+            website,
+            leadStatus,
+            Utc.Now()
+        );
+
+        record.RaiseDomainEvent(new RecordCreatedEvent(record.Id));
+
+        return record;
+
+    }
 
     public void VerifyRecordWebsite(
     Result<WebsiteTestResponse> websiteTest
@@ -119,7 +139,4 @@ public sealed class Record : Entity {
     }
 
 
-    public Record Create() {
-
-    }
 }
