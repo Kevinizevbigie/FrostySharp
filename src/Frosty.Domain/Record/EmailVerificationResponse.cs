@@ -2,8 +2,14 @@
 namespace Frosty.Domain.Record;
 
 public sealed record EmailVerificationResponse(
-    DateTime VerificationDate,
     string EmailVerifyId,
-    string Email,
-    string EmailStatus
+    EmailGuess EmailGuess,
+    EmailGuessStatus EmailStatus
 );
+
+public enum EmailGuessStatus {
+    Passed = 1,
+    Unknown = 2,
+    Failed = 3
+}
+
