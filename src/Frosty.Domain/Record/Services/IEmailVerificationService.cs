@@ -5,5 +5,5 @@ namespace Frosty.Domain.Record.Services;
 // Rabbit MQ service. Which, at the moment is in PHP. That
 // will not change for now.
 interface IEmailVerificationService {
-    public EmailVerificationResponse Send();
+    public EmailVerificationResponse Send(Guid id);
 }
