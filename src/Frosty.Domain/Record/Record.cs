@@ -26,7 +26,7 @@ public sealed class Record : Entity {
     // The website is the unique field as a person can own
     // multiple companies
     public Website Website { get; private set; }
-    public Website WebsiteVerifyDate { get; private set; }
+    public DateTime? WebsiteVerifyDate { get; private set; }
 
     public string? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
@@ -83,6 +83,10 @@ public sealed class Record : Entity {
 
     }
 
+    // THOUGHT: instead of injecting a result object, why not inject a service object?
+    // OR - I think websiteverification can be a domain EVENT that triggers when a new record is created.
+    // And Verification should be a service implemented in infrastructure but has an interface here...
+
 
     // records that are not ready to be added are simply ignored
     public void AddToSendingQueue() {
@@ -112,5 +116,10 @@ public sealed class Record : Entity {
         // if all these are true, change lead status to ReadyToSend
         // TODO: doesn't exist yet
         EmailQueue.Add(Id);
+    }
+
+
+    public Record Create() {
+
     }
 }
