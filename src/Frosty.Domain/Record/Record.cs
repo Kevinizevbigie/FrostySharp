@@ -31,6 +31,7 @@ public sealed class Record : Entity {
     public string? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
     public List<EmailGuess> EmailGuessList { get; private set; }
+    // TODO: seperate the DTO from the object type
     public List<EmailVerificationResponse> EmailVerifyList { get; private set; }
 
     public LeadStatus LeadStatus { get; private set; }
@@ -91,25 +92,45 @@ public sealed class Record : Entity {
     // EmailVerification is a slow process. It's also limited by one thread.
     // NOTE: at the moment, the production system has this entire process
     // running as a microservice managed by RabbitMQ
-    public void VerifyRecordEmail(
-    Result<EmailVerificationResponse> emailVerification
-    ) {
+    // TODO: move to app service
+    // public void VerifyRecordEmail() {
+    // If result obj is not failed
+    // set lead status to EmailFound
+    // set email verify date
+    // set email verify id/file id
 
-        // If result obj is not failed
-        // set lead status to EmailFound
-        // set email verify date
-        // set email verify id/file id
+    // if the result obj is failed, 
+    // set reject timestamp
+    // }
 
-        // if the result obj is failed, 
-        // set reject timestamp
+    // Triggered by application service
+    public void UpdateVerificationList() {
 
     }
 
-    // And Verification should be a service implemented in infrastructure but has an interface here...
+    // triggered within creation event
+    public List<EmailGuess> CreateListGuesses(
+        ContactInfo primaryContact,
+        Website website
+    ) {
 
+        List<EmailGuess> guessList = new();
+
+        string fn = primaryContact.Firstname;
+        string ln = primaryContact.Lastname;
+
+        char FirstCharOfFirstname = fn[0];
+        char FirstCharOflastname = ln[0];
+
+        //TODO: add all variations
+        guessList.Add(new EmailGuess(fn + ln + "@" + website));
+
+
+        return guessList;
+    }
 
     // records that are not ready to be added are simply ignored
-    public void AddToSendingQueue() {
+    public void AddRecordToSendingQueue() {
 
         if (RejectDate is not null || LeadStatus == LeadStatus.Rejected) {
             return;
