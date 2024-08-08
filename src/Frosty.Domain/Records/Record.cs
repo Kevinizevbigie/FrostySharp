@@ -1,7 +1,7 @@
 using Frosty.Domain.Framework;
-using Frosty.Domain.Record.Events;
+using Frosty.Domain.Records.Events;
 
-namespace Frosty.Domain.Record;
+namespace Frosty.Domain.Records;
 
 public sealed class Record : Entity {
 

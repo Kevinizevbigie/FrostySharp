@@ -1,6 +1,6 @@
 
 using Frosty.Domain.Framework;
-using Frosty.Domain.Record;
+using Frosty.Domain.Records;
 namespace Frosty.Domain.EmailPipeline;
 
 // Sometimes, in the business, this is called a Email Queue. And sometimes it is called an Email Pipeline. It's simply the records that need to be sent an initial email.
