@@ -33,6 +33,7 @@ public class EmailPipelineCard : Entity {
 
     public CardStatus CardStatus { get; private set; }
 
+    // will run via event handler
     public void AddToPipeline(Guid recordId) {
 
         if (CardStatus == CardStatus.Rejected) {
