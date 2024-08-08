@@ -46,10 +46,15 @@ public class EmailPipelineCard : Entity {
 
     public void FirstEmailSentStatusChange() {
         CardStatus = CardStatus.InitialEmailSent;
+
+        AddDomainEvent(new InitalEmailSentEvent(Id));
+
     }
 
     public void RemoveRecordFromSendingList() {
         CardStatus = CardStatus.Unsubscribed;
+
+        AddDomainEvent(new UnsubscribedContactEvent(Id));
     }
 }
 
