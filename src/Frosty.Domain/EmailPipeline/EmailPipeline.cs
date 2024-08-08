@@ -9,6 +9,15 @@ namespace Frosty.Domain.EmailPipeline;
 
 public class EmailPipeline : Entity {
 
+    private EmailPipeline(
+        Guid id,
+        Record record
+    ) : base(id) {
+
+    }
+
+    public string RecordFirstname { get; private set; }
+    public string RecordEmail { get; private set; }
 
     public DateTime AddedToPipelineUtc { get; private set; }
     public DateTime RemovedToPipelineUtc { get; private set; }
@@ -18,8 +27,12 @@ public class EmailPipeline : Entity {
 
 
 
-    public void Add(Guid recordId) {
+    public void AddPipelineCard(Guid recordId) {
 
+        // set added time
+        // create new object - builder
+
+        // I need
 
     }
 
