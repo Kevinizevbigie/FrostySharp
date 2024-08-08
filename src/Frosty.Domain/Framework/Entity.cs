@@ -26,6 +26,8 @@ public abstract class Entity {
         domainEvents.Add(domainEvent);
     }
 
+
+
     // this will be needed later to allow EF core to run
     // migrations. It remains blank.
     protected Entity() {

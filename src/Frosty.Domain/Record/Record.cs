@@ -30,9 +30,9 @@ public sealed class Record : Entity {
 
     public string? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
-    public List<EmailGuess> EmailGuessList { get; private set; }
+    public List<EmailGuess>? EmailGuessList { get; private set; }
     // TODO: seperate the DTO from the object type
-    public List<EmailVerificationResponse> EmailVerifyList { get; private set; }
+    public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
 
     public LeadStatus LeadStatus { get; private set; }
 
@@ -159,7 +159,7 @@ public sealed class Record : Entity {
 
         // if all these are true, change lead status to ReadyToSend
         // TODO: doesn't exist yet
-        EmailQueue.Add(Id);
+        EmailPipeline.Add(Id);
     }
 
 
