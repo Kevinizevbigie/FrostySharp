@@ -158,8 +158,12 @@ public sealed class Record : Entity {
         }
 
         // if all these are true, change lead status to ReadyToSend
-        // TODO: doesn't exist yet
-        EmailPipeline.Add(Id);
+        // This should be an event - Add to pipeline domain event
+        // Then the addtopipeline function in EmailPipeline should run
+        // in an event handler
+
+        this.AddDomainEvent(new AddToEmailPipelineEvent(Id));
+
     }
 
 
