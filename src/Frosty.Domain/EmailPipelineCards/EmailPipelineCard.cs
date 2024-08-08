@@ -1,7 +1,8 @@
-
+using Frosty.Domain.EmailPipelineCards.Events;
 using Frosty.Domain.Framework;
 using Frosty.Domain.Records;
-namespace Frosty.Domain.EmailPipeline;
+
+namespace Frosty.Domain.EmailPipelineCards;
 
 // Sometimes, in the business, this is called a Email Queue. And sometimes it is called an Email Pipeline. It's simply the records that need to be sent an initial email.
 
@@ -47,7 +48,7 @@ public class EmailPipelineCard : Entity {
     public void FirstEmailSentStatusChange() {
         CardStatus = CardStatus.InitialEmailSent;
 
-        AddDomainEvent(new InitalEmailSentEvent(Id));
+        AddDomainEvent(new InitialEmailSentEvent(Id));
 
     }
 

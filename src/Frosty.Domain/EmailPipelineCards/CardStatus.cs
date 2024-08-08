@@ -1,5 +1,5 @@
 
-namespace Frosty.Domain.EmailPipeline;
+namespace Frosty.Domain.EmailPipelineCards;
 
 public enum CardStatus {
     ReadyToSend = 1,
