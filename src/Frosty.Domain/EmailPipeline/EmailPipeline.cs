@@ -14,33 +14,39 @@ public class EmailPipelineCard : Entity {
         Record record
     ) : base(id) {
 
+        if (record.PrimaryContact.Email == null ||
+            record.PrimaryContact.Firstname == null) {
+            // return exception
+        }
+
+        RecordId = record.Id;
+        RecordFirstname = record.PrimaryContact.Firstname;
+        RecordEmail = record.PrimaryContact.Email;
     }
 
-    public string RecordFirstname { get; private set; }
-    public string RecordEmail { get; private set; }
+    public Guid RecordId { get; private set; }
+    public string? RecordFirstname { get; private set; }
+    public string? RecordEmail { get; private set; }
 
     public DateTime AddedToPipelineUtc { get; private set; }
     public DateTime RemovedToPipelineUtc { get; private set; }
 
     public CardStatus CardStatus { get; private set; }
 
-    public List<Record>? EmailQueue { get; private set; }
-
-
-    // 
     public void AddToPipeline(Guid recordId) {
 
-        // set added time
-        // set card status
-        // create new card
+        if (CardStatus == CardStatus.Rejected) {
+            // return exception/error
+        }
 
-
+        AddedToPipelineUtc = DateTime.UtcNow;
+        CardStatus = CardStatus.ReadyToSend;
     }
 }
 
 
 public enum CardStatus {
-    NotContacted = 1,
+    ReadyToSend = 1,
     InitialEmailSent = 2,
     MultipleContactsSent = 3,
     Rejected = 4
