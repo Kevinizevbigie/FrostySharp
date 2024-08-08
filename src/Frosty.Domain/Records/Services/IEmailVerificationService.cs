@@ -1,5 +1,5 @@
 
-namespace Frosty.Domain.Record.Services;
+namespace Frosty.Domain.Records.Services;
 
 // this send function will send the required data to the
 // Rabbit MQ service. Which, at the moment is in PHP. That

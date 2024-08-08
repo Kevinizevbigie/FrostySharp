@@ -7,9 +7,9 @@ namespace Frosty.Domain.EmailPipeline;
 
 // The reason I picked Pipeline instead of queue is because I want to seperate business thinking from the Queue data Structure.
 
-public class EmailPipeline : Entity {
+public class EmailPipelineCard : Entity {
 
-    private EmailPipeline(
+    private EmailPipelineCard(
         Guid id,
         Record record
     ) : base(id) {
@@ -22,23 +22,26 @@ public class EmailPipeline : Entity {
     public DateTime AddedToPipelineUtc { get; private set; }
     public DateTime RemovedToPipelineUtc { get; private set; }
 
+    public CardStatus CardStatus { get; private set; }
+
     public List<Record>? EmailQueue { get; private set; }
 
 
-
-
-    public void AddPipelineCard(Guid recordId) {
+    // 
+    public void AddToPipeline(Guid recordId) {
 
         // set added time
-        // create new object - builder
+        // set card status
+        // create new card
 
-        // I need
 
     }
+}
 
 
-
-
-
-
+public enum CardStatus {
+    NotContacted = 1,
+    InitialEmailSent = 2,
+    MultipleContactsSent = 3,
+    Rejected = 4
 }

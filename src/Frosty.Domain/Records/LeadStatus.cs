@@ -1,5 +1,5 @@
 
-namespace Frosty.Domain.Record;
+namespace Frosty.Domain.Records;
 
 public enum LeadStatus {
     New = 1,

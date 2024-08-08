@@ -1,5 +1,5 @@
 
-namespace Frosty.Domain.Record;
+namespace Frosty.Domain.Records;
 
 // An email log records when and how often an email has been sent
 public sealed record EmailLog {
