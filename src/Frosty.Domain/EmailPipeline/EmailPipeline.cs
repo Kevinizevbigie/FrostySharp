@@ -43,12 +43,14 @@ public class EmailPipelineCard : Entity {
         AddedToPipelineUtc = DateTime.UtcNow;
         CardStatus = CardStatus.ReadyToSend;
     }
+
+    public void FirstEmailSentStatusChange() {
+        CardStatus = CardStatus.InitialEmailSent;
+    }
+
+    public void RemoveRecordFromSendingList() {
+        CardStatus = CardStatus.Unsubscribed;
+    }
 }
 
 
-public enum CardStatus {
-    ReadyToSend = 1,
-    InitialEmailSent = 2,
-    MultipleContactsSent = 3,
-    Rejected = 4
-}
