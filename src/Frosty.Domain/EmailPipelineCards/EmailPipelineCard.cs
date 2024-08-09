@@ -20,6 +20,7 @@ public class EmailPipelineCard : Entity {
             // return exception
         }
 
+
         RecordId = record.Id;
         RecordFirstname = record.PrimaryContact.Firstname;
         RecordEmail = record.PrimaryContact.Email;
@@ -35,6 +36,10 @@ public class EmailPipelineCard : Entity {
     public CardStatus CardStatus { get; private set; }
 
     // will run via event handler
+    // TODO: I need a way to prevent a duplicate card
+    // maybe a service? Website is unique
+    // which means records need a trigger to say they have been added
+    // lead status?
     public void AddToPipeline(Guid recordId) {
 
         if (CardStatus == CardStatus.Rejected) {
@@ -57,6 +62,7 @@ public class EmailPipelineCard : Entity {
 
         AddDomainEvent(new UnsubscribedContactEvent(Id));
     }
+
 }
 
 
