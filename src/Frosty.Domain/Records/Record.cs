@@ -120,15 +120,28 @@ public sealed class Record : Entity {
 
         List<EmailGuess> guessList = new();
 
-        string fn = primaryContact.Firstname;
-        string ln = primaryContact.Lastname;
+        var fn = primaryContact.Firstname;
+        var ln = primaryContact.Lastname;
 
-        char FirstCharOfFirstname = fn[0];
-        char FirstCharOflastname = ln[0];
+        var fnFirstChar = fn[0];
+        var lnFirstChar = ln[0];
 
-        //TODO: add all variations
         guessList.Add(new EmailGuess(fn + ln + "@" + website));
+        guessList.Add(new EmailGuess(fn + "@" + website));
+        guessList.Add(new EmailGuess(fn + lnFirstChar + "@" + website));
+        guessList.Add(new EmailGuess(fn + "." + ln + "@" + website));
+        guessList.Add(new EmailGuess(fn + "_" + ln + "@" + website));
 
+        guessList.Add(new EmailGuess(fnFirstChar + ln + "@" + website));
+        guessList.Add(new EmailGuess(fnFirstChar + lnFirstChar + "@" + website));
+
+        guessList.Add(new EmailGuess(ln + fn + "@" + website));
+        guessList.Add(new EmailGuess(ln + "@" + website));
+        guessList.Add(new EmailGuess(ln + fnFirstChar + "@" + website));
+        guessList.Add(new EmailGuess(ln + "." + fn + "@" + website));
+        guessList.Add(new EmailGuess(ln + "_" + fn + "@" + website));
+
+        // NOTE: For now, secondary contacts are ignored
         return guessList;
     }
 
