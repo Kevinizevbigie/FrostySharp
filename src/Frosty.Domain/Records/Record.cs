@@ -73,36 +73,6 @@ public sealed class Record : Entity {
 
     }
 
-    // TODO: move below to infra/app layer
-    // public void VerifyRecordWebsite() {
-
-    // update verify data time to now
-
-    // If result obj is not failed
-    // set lead status to NameFound
-
-
-    // if the result obj is failed, 
-    // set reject timestamp
-    // set lead status to Rejected
-    // }
-
-
-
-    // EmailVerification is a slow process. It's also limited by one thread.
-    // NOTE: at the moment, the production system has this entire process
-    // running as a microservice managed by RabbitMQ
-    // TODO: move to app service
-    // public void VerifyRecordEmail() {
-    // If result obj is not failed
-    // set lead status to EmailFound
-    // set email verify date
-    // set email verify id/file id
-
-    // if the result obj is failed, 
-    // set reject timestamp
-    // }
-
     // Triggered by application service
     public void UpdateVerificationList(
         // list is returned by Send() in service interface
