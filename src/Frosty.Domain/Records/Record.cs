@@ -68,7 +68,7 @@ public sealed class Record : Entity {
         // TODO: Domain event will trigger website verification in
         // TODO: Domain event will Create email guess list
         // application/Infra layer
-        record.AddDomainEvent(new RecordCreatedEvent(record.Id));
+        record.AddDomainEvent(new RecordCreatedDomainEvent(record.Id));
 
         return record;
 
@@ -166,7 +166,7 @@ public sealed class Record : Entity {
         // Then the addtopipeline function in EmailPipeline should run
         // in an event handler
 
-        this.AddDomainEvent(new AddToEmailPipelineEvent(Id));
+        this.AddDomainEvent(new AddToEmailPipelineDomainEvent(Id));
 
     }
 
