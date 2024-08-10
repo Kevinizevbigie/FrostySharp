@@ -1,8 +1,11 @@
 
 using Frosty.Domain.Framework;
+using Frosty.Domain.Users.Events;
 
 namespace Frosty.Domain.Users;
 
+// anything related to authentication and authorization will be
+// handled at a later
 public sealed class User : Entity {
 
     public Firstname? Firstname { get; private set; }
@@ -26,7 +29,7 @@ public sealed class User : Entity {
 
         User user = new User(Guid.NewGuid(), fn, ln, email);
 
-        user.AddDomainEvent(new NewUserCreatedDomainEvent());
+        user.AddDomainEvent(new NewUserCreatedDomainEvent(user.Id));
 
         return user;
 
