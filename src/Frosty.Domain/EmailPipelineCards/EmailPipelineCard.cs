@@ -38,6 +38,8 @@ public class EmailPipelineCard : Entity {
     // will run via event handler
     // TODO: I need a way to prevent a duplicate card
     // inside repository for EmailPipelineCard 
+    // In command, we check for duplicate before we run "add to pipeline"
+    // return result - failure or success
     public void AddToPipeline(Guid recordId) {
 
         if (CardStatus == CardStatus.Rejected) {
