@@ -3,4 +3,5 @@ using Frosty.Domain.Framework;
 
 namespace Frosty.Domain.EmailPipelineCards.Events;
 
-public sealed record InitialEmailSentEvent(Guid RecordId) : IDomainEvent;
+public sealed record UnsubscribedContactDomainEvent(Guid RecordId) : IDomainEvent;
+
