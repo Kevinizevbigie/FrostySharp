@@ -1,5 +1,6 @@
 using Frosty.Domain.Framework;
 using Frosty.Domain.Records.Events;
+using Frosty.Domain.Records.Services;
 
 namespace Frosty.Domain.Records;
 
@@ -116,7 +117,27 @@ public sealed class Record : Entity {
     }
 
     // records that are not ready to be added are simply ignored
-    public void AddRecordToSendingQueue() {
+    public void AddRecordToSendingQueue(
+        IEmailVerificationService service) {
+
+        //TODO: I need a better way of organising the verification service.
+        // The concrete class will be in application layer.
+        // But, how will the domain know about the result?
+
+        // Create new record and Website check is coupled.
+        // Email verification should only happened when we want to add to
+        // EmailPipeline as a card.
+
+        // Therefore...
+        // Command - AddNewRecord
+        // Command - AddToPipeline
+        // Command - SendEmail
+        // Query - GetPipelineReport
+        // Query - GetRecord
+        // ^^ These will be the CQRS application layer
+        // Because of the nature of the external API for verification
+        // Verification should be sent to rabbit service and Frosty should wait for the return value before deciding to add to pipeline
+        var verificationStatus = service.Send(Id);
 
         if (RejectDate is not null || LeadStatus == LeadStatus.Rejected) {
             return;
