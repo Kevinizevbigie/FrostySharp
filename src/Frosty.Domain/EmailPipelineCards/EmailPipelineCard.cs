@@ -37,9 +37,7 @@ public class EmailPipelineCard : Entity {
 
     // will run via event handler
     // TODO: I need a way to prevent a duplicate card
-    // maybe a service? Website is unique
-    // which means records need a trigger to say they have been added
-    // lead status?
+    // inside repository for EmailPipelineCard 
     public void AddToPipeline(Guid recordId) {
 
         if (CardStatus == CardStatus.Rejected) {
