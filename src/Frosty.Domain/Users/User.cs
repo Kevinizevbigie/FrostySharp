@@ -23,5 +23,12 @@ public sealed class User : Entity {
         Firstname fn,
         Lastname ln,
         Email email) {
+
+        User user = new User(Guid.NewGuid(), fn, ln, email);
+
+        user.AddDomainEvent(new NewUserCreatedDomainEvent());
+
+        return user;
+
     }
 }
