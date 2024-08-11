@@ -43,9 +43,11 @@ public sealed class Record : Entity {
 
     // NOTE: if the verification or website service failed, Reject.
     public DateTime? RejectDate { get; private set; }
-    public List<EmailLog>? EmailLogs { get; private set; }
-    public int? EmailCounter { get; private set; }
 
+    // TODO: Email log should be moved to EmailPipelineCard Entity
+    public List<EmailLog>? EmailLogs { get; private set; }
+    // TODO: And this
+    public int? EmailCounter { get; private set; }
 
     public static Record Create(
         string firstname,
