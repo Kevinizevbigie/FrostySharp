@@ -31,6 +31,8 @@ public sealed class Record : Entity {
 
     public string? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
+
+    // TODO: We can add the guess list to the Email Value object?
     public List<EmailGuess>? EmailGuessList { get; private set; }
     // TODO: seperate the DTO from the object type
     public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
@@ -67,9 +69,11 @@ public sealed class Record : Entity {
             DateTime.UtcNow
         );
 
-        // TODO: Domain event will trigger website verification in
-        // TODO: Domain event will Create email guess list
+        // TODO: Create email guess list here from value object
+
         // application/Infra layer
+        // Should trigger website ping service. Need interface in domain.
+        // if fail, record gets rejected
         record.AddDomainEvent(new RecordCreatedDomainEvent(record.Id));
 
         return record;
