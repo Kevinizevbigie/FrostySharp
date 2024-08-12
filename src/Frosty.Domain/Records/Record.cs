@@ -59,6 +59,7 @@ public sealed class Record : Entity {
         DateTime createDate,
         LeadStatus leadStatus = LeadStatus.New,
         List<ContactInfo>? secondaryContacts = null
+    // IRecordDuplicateCheckerService service
     ) {
 
         var record = new Record(
