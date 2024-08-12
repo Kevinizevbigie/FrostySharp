@@ -1,7 +1,8 @@
 
+using Frosty.Domain.Shared;
 namespace Frosty.Domain.Records;
 
 public sealed record ContactInfo(
-    string Firstname,
-    string Lastname,
-    string? Email = null);
+    Name<Firstname> Firstname,
+    Name<Lastname> Lastname,
+    Email? Email = null);

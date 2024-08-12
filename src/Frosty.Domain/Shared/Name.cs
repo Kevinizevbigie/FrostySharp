@@ -5,42 +5,39 @@ using Frosty.Domain.Framework;
 
 namespace Frosty.Domain.Shared;
 
-public class Name {
+public class Name<T> {
 
-    private string Value;
+    public string Value;
+    public T Obj;
 
-    protected Name(string name) {
-        Value = name;
+    public Name(string name, T entity) {
+
+        Validate(name);
+
+        Value = MakeProper(name);
+        Obj = entity;
+
     }
 
-    public static Result<TValue> Create<TValue>(string name) where TValue
-        : Name, new() {
+    private Result Validate(string name) {
 
         // If blank, name cannot be blank exception
         if (string.IsNullOrEmpty(name)) {
-            return Result.Failure<TValue>(SharedErrors.NameCannotBeBlank);
+            return Result.Failure(SharedErrors.NameCannotBeBlank);
         }
 
         // if less than 3 chars - unlikely to be a name exception
         if (name.Length < 3) {
-            return Result.Failure<TValue>(SharedErrors.UnlikeyNotName);
+            return Result.Failure(SharedErrors.UnlikeyNotName);
         }
 
-        // no arguement passed when created new generic static
-        // but it works.
-        var obj = new TValue();
-
-        obj.MakeProper();
-
-        return Result.Success<TValue>(obj);
+        return Result.Success();
     }
 
 
-    private string MakeProper() {
-
+    private string MakeProper(string name) {
         TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-
-        return textInfo.ToTitleCase(Value);
+        return textInfo.ToTitleCase(name);
     }
 
 }
