@@ -1,14 +1,11 @@
 
+using Frosty.Domain.Shared;
 namespace Frosty.Domain.Users;
 
-public record Firstname {
+public class Firstname : Name {
 
-    protected string Value;
-
-    public Firstname(string name) {
-
-        Value = name;
-
+    public Firstname(string name)
+        : base(name) {
     }
 }
 
