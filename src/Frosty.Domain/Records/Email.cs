@@ -1,14 +1,26 @@
 
 namespace Frosty.Domain.Records;
 
+// An email is not created until much later in the process.
+// Therefore, we will already have fn, ln and website.
+
 public sealed class Email {
 
     public string Value { get; private set; }
     public List<EmailGuess>? EmailGuessList { get; private set; }
 
-    public Email(string submittedEmail) {
-        
+    public Email(
+        string submittedEmail,
+        ContactInfo info,
+        Website website
+    ) {
+
+        // NEED VALIDATION - DO HERE
+
+        //
         Value = submittedEmail;
+        EmailGuessList = CreateListGuesses(info, website);
+
     }
 
     // triggered within creation event
