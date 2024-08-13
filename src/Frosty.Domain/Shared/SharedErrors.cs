@@ -13,4 +13,8 @@ public static class SharedErrors {
     public static Error UnlikeyNotName = new(
             "Name.NotReal",
             "The name supplied does not look real");
+
+    public static Error MustBeOneWord = new(
+            "Name.MoreOrLessThanOneWord",
+            "A name can only be a single word. This has more or less than 1");
 }

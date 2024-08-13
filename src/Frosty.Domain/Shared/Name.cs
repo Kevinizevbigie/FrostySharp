@@ -29,6 +29,9 @@ public class Name<T> {
         }
 
         // Check that name is only one word
+        if (CountWords(name) > 1 || CountWords(name) < 1) {
+            return Result.Failure(SharedErrors.MustBeOneWord);
+        }
 
         return Result.Success();
     }
@@ -39,6 +42,15 @@ public class Name<T> {
         return textInfo.ToTitleCase(name);
     }
 
-    // Add a method to update a name
+    private int CountWords(string words) {
+        char[] delimiters = new char[] { ' ', '\r', '\n' };
 
+        var count = words.Split(
+            delimiters,
+            StringSplitOptions.RemoveEmptyEntries).Length;
+
+        return count;
+    }
+
+    // NOTE: in future, add method to update name. Not important now
 }
