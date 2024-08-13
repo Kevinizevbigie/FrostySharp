@@ -17,5 +17,6 @@ public sealed record Website {
         return new Website(website);
 
     }
+
 }
 
