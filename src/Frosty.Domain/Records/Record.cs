@@ -32,8 +32,7 @@ public sealed class Record : Entity {
     public string? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
 
-    // TODO: We can add the guess list to the Email Value object?
-    public List<EmailGuess>? EmailGuessList { get; private set; }
+
     // TODO: seperate the DTO from the object type
     public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
 
@@ -90,38 +89,6 @@ public sealed class Record : Entity {
 
     }
 
-    // triggered within creation event
-    public List<EmailGuess> CreateListGuesses(
-        ContactInfo primaryContact,
-        Website website
-    ) {
-
-        List<EmailGuess> guessList = new();
-
-        var fn = primaryContact.Firstname;
-        var ln = primaryContact.Lastname;
-
-        var fnFirstChar = fn[0];
-        var lnFirstChar = ln[0];
-
-        guessList.Add(new EmailGuess(fn + ln + "@" + website));
-        guessList.Add(new EmailGuess(fn + "@" + website));
-        guessList.Add(new EmailGuess(fn + lnFirstChar + "@" + website));
-        guessList.Add(new EmailGuess(fn + "." + ln + "@" + website));
-        guessList.Add(new EmailGuess(fn + "_" + ln + "@" + website));
-
-        guessList.Add(new EmailGuess(fnFirstChar + ln + "@" + website));
-        guessList.Add(new EmailGuess(fnFirstChar + lnFirstChar + "@" + website));
-
-        guessList.Add(new EmailGuess(ln + fn + "@" + website));
-        guessList.Add(new EmailGuess(ln + "@" + website));
-        guessList.Add(new EmailGuess(ln + fnFirstChar + "@" + website));
-        guessList.Add(new EmailGuess(ln + "." + fn + "@" + website));
-        guessList.Add(new EmailGuess(ln + "_" + fn + "@" + website));
-
-        // NOTE: For now, secondary contacts are ignored
-        return guessList;
-    }
 
     // records that are not ready to be added are simply ignored
     public void AddRecordToSendingQueue(
