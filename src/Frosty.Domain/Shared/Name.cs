@@ -8,15 +8,12 @@ namespace Frosty.Domain.Shared;
 public class Name<T> {
 
     public string Value;
-    public T Obj;
 
-    public Name(string name, T entity) {
+    public Name(string name) {
 
         Validate(name);
 
         Value = MakeProper(name);
-        Obj = entity;
-
     }
 
     private Result Validate(string name) {
@@ -31,6 +28,8 @@ public class Name<T> {
             return Result.Failure(SharedErrors.UnlikeyNotName);
         }
 
+        // Check that name is only one word
+
         return Result.Success();
     }
 
@@ -39,5 +38,7 @@ public class Name<T> {
         TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
         return textInfo.ToTitleCase(name);
     }
+
+    // Add a method to update a name
 
 }
