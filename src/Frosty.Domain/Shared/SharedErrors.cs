@@ -3,7 +3,6 @@ using Frosty.Domain.Framework;
 
 namespace Frosty.Domain.Shared;
 
-
 public static class SharedErrors {
 
     public static Error NameCannotBeBlank = new(
