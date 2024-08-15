@@ -11,11 +11,17 @@ public sealed record EmailVerifyId {
 
     public static EmailVerifyId GenerateRandomCode() {
 
-        // LOGIC FOR RANDOM STRING HERE - 8 Chars
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        var randomString = "";
+        var stringChars = new char[8];
 
-        return new EmailVerifyId(randomString);
+        var random = new Random();
+
+        for (int i = 0; i < stringChars.Length; i++) {
+            stringChars[i] = chars[random.Next(chars.Length)];
+        }
+
+        return new EmailVerifyId(new string(stringChars));
     }
 
 }
