@@ -19,4 +19,9 @@ public static class RecordErrors {
         "Record.RejectedWebsite",
         "This website does not exist or is not functioning"
     );
+
+    public static Error BadEmail = new(
+        "Record.BadEmail",
+        "This email address does not look proper"
+    );
 }

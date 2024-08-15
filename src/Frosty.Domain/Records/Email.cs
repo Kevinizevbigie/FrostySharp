@@ -1,4 +1,5 @@
-
+using System.Text.RegularExpressions;
+using Frosty.Domain.Framework;
 namespace Frosty.Domain.Records;
 
 // An email is not created until much later in the process.
@@ -15,13 +16,41 @@ public sealed class Email {
         Website website
     ) {
 
-        // NEED VALIDATION - DO HERE
-
-        //
         Value = submittedEmail;
         EmailGuessList = CreateListGuesses(info, website);
-
     }
+
+
+    // Factory
+    public static Result<Email> Create(
+        string submittedEmail,
+        ContactInfo info,
+        Website website
+    ) {
+
+        Email email = new Email(submittedEmail, info, website);
+
+        var emailCheck = email.VerifyEmailAddress(submittedEmail);
+
+        if (emailCheck == false) {
+            return Result.Failure<Email>(RecordErrors.BadEmail);
+        }
+
+        return Result.Success<Email>(email);
+    }
+
+    private bool VerifyEmailAddress(string email) {
+
+        Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+        Match match = regex.Match(email);
+
+        if (match.Success) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     // triggered within creation event
     public List<EmailGuess> CreateListGuesses(

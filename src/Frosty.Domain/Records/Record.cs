@@ -47,6 +47,7 @@ public sealed class Record : Entity {
 
     // TODO: Email log should be moved to EmailPipelineCard Entity
     public List<EmailLog>? EmailLogs { get; private set; }
+
     // TODO: And this
     public int? EmailCounter { get; private set; }
 

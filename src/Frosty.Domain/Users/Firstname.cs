@@ -20,11 +20,6 @@ public class Firstname();
 // TODO: Website Value object in record needs a validate function
 // Regex match standard website syntax.
 
-// TODO: Emailverifyid is currently a string. Change.
-// Add functionality to randomly generate an ID of 8 chars.
-
 // TODO: Comment should have the Add Comment, remove comment functionality.
 // Also, validate that a comment name or value is not blank
 // Comment value should be a 
-
-// TODO: Then, check the other objects. Deal with these first.
