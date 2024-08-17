@@ -1,6 +1,7 @@
 using Frosty.Domain.Framework;
 using Frosty.Domain.Records.Events;
 using Frosty.Domain.Records.Services;
+using Frosty.Domain.Shared;
 
 namespace Frosty.Domain.Records;
 
@@ -33,30 +34,30 @@ public sealed class Record : Entity {
     public string? EmailVerifyId { get; private set; }
 
     public DateTime? EmailVerifyDate { get; private set; }
-
-    // TODO: seperate the DTO from the object type
-    // a list of email guesses returned back from an external service
     public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
-
     public LeadStatus LeadStatus { get; private set; }
-
-    // TODO: Add functions for add/remove comment
     public List<Comment>? Comments { get; private set; }
 
     // NOTE: if the verification or website service failed, Reject.
     public DateTime? RejectDate { get; private set; }
     public DateTime CreateDate { get; private set; }
 
-    public static Record Create(
-        string firstname,
-        string lastname,
-        string email,
+    public async static Task<Result<Record>> Create(
+        Name<Firstname> firstname,
+        Name<Lastname> lastname,
+        Email email,
         Website website,
         DateTime createDate,
+        IRecordCheckDuplicateService service,
         LeadStatus leadStatus = LeadStatus.New,
         List<ContactInfo>? secondaryContacts = null
-    // IRecordDuplicateCheckerService service
     ) {
+
+        var recordCheck = await service.Check(website);
+
+        if (recordCheck == false) {
+            Result.Failure<Record>(RecordErrors.DuplicateWebsite);
+        }
 
         var record = new Record(
             Guid.NewGuid(),
@@ -73,8 +74,7 @@ public sealed class Record : Entity {
         // if fail, record gets rejected
         record.AddDomainEvent(new RecordCreatedDomainEvent(record.Id));
 
-        return record;
-
+        return Result.Success<Record>(record);
     }
 
     public Result ChangeLeadStatus(LeadStatus ls) {
