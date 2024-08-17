@@ -35,6 +35,9 @@ public class EmailPipelineCard : Entity {
 
     public CardStatus CardStatus { get; private set; }
 
+    public List<EmailLog>? EmailLogs { get; private set; }
+    public int? EmailCounter { get; private set; }
+
     // will run via event handler
     // TODO: I need a way to prevent a duplicate card
     // inside repository for EmailPipelineCard 
