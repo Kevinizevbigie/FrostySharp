@@ -24,20 +24,22 @@ public sealed class Record : Entity {
     public ContactInfo PrimaryContact { get; private set; }
     public List<ContactInfo>? SecondaryContacts { get; private set; }
 
-    // The website is the unique field as a person can own
-    // multiple companies
+    // The website is a unique field. A person can own multiple companies.
+    // Meaning, the system can reference the same person in different companies.
     public Website Website { get; private set; }
     public DateTime? WebsiteVerifyDate { get; private set; }
 
     public string? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
 
-
     // TODO: seperate the DTO from the object type
+    // a list of email guesses returned back from an external service
     public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
 
+    // TODO: Add functions to change status here
     public LeadStatus LeadStatus { get; private set; }
 
+    // TODO: Add functions for add/remove comment
     public List<Comment>? Comments { get; private set; }
 
     public DateTime CreateDate { get; private set; }
@@ -47,8 +49,6 @@ public sealed class Record : Entity {
 
     // TODO: Email log should be moved to EmailPipelineCard Entity
     public List<EmailLog>? EmailLogs { get; private set; }
-
-    // TODO: And this
     public int? EmailCounter { get; private set; }
 
     public static Record Create(
@@ -81,6 +81,7 @@ public sealed class Record : Entity {
 
     }
 
+    // NOTE: STOP HERE - for now
     // Triggered by application service
     public void UpdateVerificationList(
         // list is returned by Send() in service interface
