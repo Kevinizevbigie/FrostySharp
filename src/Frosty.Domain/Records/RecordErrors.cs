@@ -24,4 +24,9 @@ public static class RecordErrors {
         "Record.BadEmail",
         "This email address does not look proper"
     );
+
+    public static Error BlankValue = new(
+        "Record.BlankValue",
+        "The value is blank"
+    );
 }

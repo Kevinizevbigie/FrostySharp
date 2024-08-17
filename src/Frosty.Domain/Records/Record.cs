@@ -29,14 +29,15 @@ public sealed class Record : Entity {
     public Website Website { get; private set; }
     public DateTime? WebsiteVerifyDate { get; private set; }
 
+    // TODO: should not be string
     public string? EmailVerifyId { get; private set; }
+
     public DateTime? EmailVerifyDate { get; private set; }
 
     // TODO: seperate the DTO from the object type
     // a list of email guesses returned back from an external service
     public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
 
-    // TODO: Add functions to change status here
     public LeadStatus LeadStatus { get; private set; }
 
     // TODO: Add functions for add/remove comment

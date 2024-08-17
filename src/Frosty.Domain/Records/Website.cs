@@ -20,6 +20,8 @@ public sealed record Website {
         IPingWebsiteService<Website> service
     ) {
 
+        //TODO: Add if website is blank 
+
         var res = await service.Ping(website);
 
         if (res.IsSuccess == false) {
