@@ -42,11 +42,9 @@ public sealed class Record : Entity {
     // TODO: Add functions for add/remove comment
     public List<Comment>? Comments { get; private set; }
 
-    public DateTime CreateDate { get; private set; }
-
     // NOTE: if the verification or website service failed, Reject.
     public DateTime? RejectDate { get; private set; }
-
+    public DateTime CreateDate { get; private set; }
 
     public static Record Create(
         string firstname,
@@ -76,6 +74,18 @@ public sealed class Record : Entity {
 
         return record;
 
+    }
+
+    public Result ChangeLeadStatus(LeadStatus ls) {
+
+        // rejected records cannot be changed.
+        if (LeadStatus == LeadStatus.Rejected) {
+            Result.Failure(RecordErrors.RejectedRecord);
+        }
+
+        LeadStatus = ls;
+
+        return Result.Success();
     }
 
     // NOTE: STOP HERE - for now
