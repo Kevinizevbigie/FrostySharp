@@ -30,11 +30,10 @@ public sealed class Record : Entity {
     public Website Website { get; private set; }
     public DateTime? WebsiteVerifyDate { get; private set; }
 
-    // TODO: should not be string
-    public string? EmailVerifyId { get; private set; }
-
+    public EmailVerifyId? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
     public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
+
     public LeadStatus LeadStatus { get; private set; }
     public List<Comment>? Comments { get; private set; }
 
@@ -67,11 +66,6 @@ public sealed class Record : Entity {
             DateTime.UtcNow
         );
 
-        // TODO: Create email guess list here from value object
-
-        // application/Infra layer
-        // Should trigger website ping service. Need interface in domain.
-        // if fail, record gets rejected
         record.AddDomainEvent(new RecordCreatedDomainEvent(record.Id));
 
         return Result.Success<Record>(record);
@@ -83,20 +77,16 @@ public sealed class Record : Entity {
         if (LeadStatus == LeadStatus.Rejected) {
             Result.Failure(RecordErrors.RejectedRecord);
         }
-
         LeadStatus = ls;
-
         return Result.Success();
     }
 
-    // NOTE: STOP HERE - for now
-    // Triggered by application service
-    public void UpdateVerificationList(
-        // list is returned by Send() in service interface
-        List<EmailVerificationResponse> res
+    public async Task VerifyEmailGuesses(
+        IEmailVerificationService service
     ) {
-        EmailVerifyList = res;
+        var verifyResponse = await service.Send(Id);
 
+        EmailVerifyList = verifyResponse._value;
     }
 
 
