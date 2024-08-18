@@ -32,7 +32,7 @@ public sealed class Record : Entity {
 
     public EmailVerifyId? EmailVerifyId { get; private set; }
     public DateTime? EmailVerifyDate { get; private set; }
-    public List<EmailVerificationResponse>? EmailVerifyList { get; private set; }
+    public List<EmailVerificationResponse>? EmailVerifyList = null;
 
     public LeadStatus LeadStatus { get; private set; }
     public List<Comment>? Comments { get; private set; }
@@ -85,39 +85,21 @@ public sealed class Record : Entity {
         IEmailVerificationService service
     ) {
         var verifyResponse = await service.Send(Id);
+        ChangeLeadStatus(LeadStatus.EmailVerified);
 
         EmailVerifyList = verifyResponse._value;
     }
 
 
     // records that are not ready to be added are simply ignored
-    public void AddRecordToSendingQueue(
-        IEmailVerificationService service) {
+    public async Task AddRecordToSendingQueue() {
 
-        //TODO: I need a better way of organising the verification service.
-        // The concrete class will be in application layer.
-        // But, how will the domain know about the result?
-
-        // Create new record and Website check is coupled.
-        // Email verification should only happened when we want to add to
-        // EmailPipeline as a card.
-
-        // Therefore...
-        // Command - AddNewRecord
-        // Command - AddToPipeline
-        // Command - SendEmail
-        // Query - GetPipelineReport
-        // Query - GetRecord
-        // ^^ These will be the CQRS application layer
-        // Because of the nature of the external API for verification
-        // Verification should be sent to rabbit service and Frosty should wait for the return value before deciding to add to pipeline
-        var verificationStatus = service.Send(Id);
-
-        if (RejectDate is not null || LeadStatus == LeadStatus.Rejected) {
+        // if there are no email guesses.
+        if (EmailVerifyList == null) {
             return;
         }
 
-        if (EmailCounter > 0) {
+        if (RejectDate is not null || LeadStatus == LeadStatus.Rejected) {
             return;
         }
 
@@ -136,8 +118,8 @@ public sealed class Record : Entity {
         }
 
         // if all these are true, change lead status to ReadyToSend
-        // This should be an event - Add to pipeline domain event
-        // Then the addtopipeline function in EmailPipeline should run
+        // This should be an event - The handler will be in the app layer
+        // AddToPipeline function in EmailPipelineCard Entity should run
         // in an event handler
 
         this.AddDomainEvent(new AddToEmailPipelineDomainEvent(Id));
