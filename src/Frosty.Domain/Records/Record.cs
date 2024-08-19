@@ -92,7 +92,7 @@ public sealed class Record : Entity {
 
 
     // records that are not ready to be added are simply ignored
-    public async Task AddRecordToSendingQueue() {
+    public void AddRecordToSendingQueue() {
 
         // if there are no email guesses.
         if (EmailVerifyList == null) {
