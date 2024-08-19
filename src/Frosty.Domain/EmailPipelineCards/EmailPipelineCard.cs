@@ -22,8 +22,8 @@ public class EmailPipelineCard : Entity {
 
 
         RecordId = record.Id;
-        RecordFirstname = record.PrimaryContact.Firstname;
-        RecordEmail = record.PrimaryContact.Email;
+        // RecordFirstname = record.PrimaryContact.Firstname;
+        // RecordEmail = record.PrimaryContact.Email;
     }
 
     public Guid RecordId { get; private set; }
