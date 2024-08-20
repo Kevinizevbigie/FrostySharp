@@ -84,6 +84,9 @@ public sealed class Record : Entity {
     public async Task VerifyEmailGuesses(
         IEmailVerificationService service
     ) {
+        // TODO: within the service, I need to be able to raise
+        // a REJECT RECORD domain event. This event needs to be
+        // in the domain
         var verifyResponse = await service.Send(Id);
         ChangeLeadStatus(LeadStatus.EmailVerified);
 
