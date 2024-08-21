@@ -55,7 +55,7 @@ public sealed class Record : Entity {
         var recordCheck = await service.Check(website);
 
         if (recordCheck == false) {
-            Result.Failure<Record>(RecordErrors.DuplicateWebsite);
+            return Result.Failure<Record>(RecordErrors.DuplicateWebsite);
         }
 
         var record = new Record(
