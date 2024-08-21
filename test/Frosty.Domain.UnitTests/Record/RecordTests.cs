@@ -72,12 +72,12 @@ public class RecordTests {
 
 
     [Fact]
-    public void Create_Should_ReturnFailure_When_DuplicateRecordServiceFails() {
+    public async void Create_Should_ReturnFailure_When_DuplicateRecordServiceFails() {
 
         // Act
 
         // If website is duplicate this should fail
-        var KevRecord = Frosty.Domain.Records.Record.Create(
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
             RecordData.Fn,
             RecordData.Ln,
             RecordSensitiveData.WebsitePass,
@@ -85,81 +85,84 @@ public class RecordTests {
             RecordServices.DupCheck
         );
 
-        var num = 1;
+        var want = true;
+        var got = KevRecord.IsFailure;
+
         // Assert
-        Assert.True(num == 1, "one should equal one");
+        Assert.Equal(want, got);
+        // Assert.Equal(DateTime.Now, time);
 
     }
 
-    [Fact]
-    public void Create_Should_ReturnRecord_On_Success() {
+    // [Fact]
+    // public void Create_Should_ReturnRecord_On_Success() {
 
-        // Arrange
-
-
-
-        // Act
-
-
-        // Assert
-
-    }
-
-    [Fact]
-    public void Create_Should_RaiseDomainEvent_On_Success() {
-
-        // Arrange
+    // Arrange
 
 
 
-        // Act
+    // Act
 
 
-        // Assert
+    // Assert
 
-    }
+    // }
 
-    [Fact]
-    public void VerifyEmails_Should_ChangeLeadStatusToVerifed() {
+    // [Fact]
+    // public void Create_Should_RaiseDomainEvent_On_Success() {
 
-        // Arrange
-
-
-
-        // Act
-
-
-        // Assert
-
-    }
-
-    [Fact]
-    public void VerifyEmails_Should_AddVerifyEmailResultsToEmailVerifyList() {
-
-        // Arrange
+    // Arrange
 
 
 
-        // Act
+    // Act
 
 
-        // Assert
+    // Assert
 
-    }
+    // }
 
-    [Fact]
-    public void AddToSendQueue_Should_RaiseDomainEvent_On_Success() {
+    // [Fact]
+    // public void VerifyEmails_Should_ChangeLeadStatusToVerifed() {
 
-        // Arrange
-
-
-
-        // Act
+    // Arrange
 
 
-        // Assert
 
-    }
+    // Act
+
+
+    // Assert
+
+    // }
+
+    // [Fact]
+    // public void VerifyEmails_Should_AddVerifyEmailResultsToEmailVerifyList() {
+
+    // Arrange
+
+
+
+    // Act
+
+
+    // Assert
+
+    // }
+
+    // [Fact]
+    // public void AddToSendQueue_Should_RaiseDomainEvent_On_Success() {
+
+    // Arrange
+
+
+
+    // Act
+
+
+    // Assert
+
+    // }
 
 
     // ======================================== //
