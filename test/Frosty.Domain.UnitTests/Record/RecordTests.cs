@@ -18,9 +18,15 @@ internal class WebsitePingFalse : IPingWebsiteService {
     }
 }
 
-internal class DuplicateCheckService : IRecordCheckDuplicateService {
+internal class DuplicateCheckServiceFailed : IRecordCheckDuplicateService {
     public async Task<bool> Check(Website website) {
         return false;
+    }
+}
+
+internal class DuplicateCheckServiceSuccess : IRecordCheckDuplicateService {
+    public async Task<bool> Check(Website website) {
+        return true;
     }
 }
 
@@ -28,7 +34,8 @@ internal class DuplicateCheckService : IRecordCheckDuplicateService {
 internal static class RecordServices {
     internal static WebsitePingTrue PingTrue = new();
     internal static WebsitePingFalse PingFalse = new();
-    internal static DuplicateCheckService DupCheck = new();
+    internal static DuplicateCheckServiceFailed DupCheckFail = new();
+    internal static DuplicateCheckServiceSuccess DupCheckSucceed = new();
 }
 
 internal static class RecordData {
@@ -82,7 +89,7 @@ public class RecordTests {
             RecordData.Ln,
             RecordSensitiveData.WebsitePass,
             RecordData.CreatedOn,
-            RecordServices.DupCheck
+            RecordServices.DupCheckFail
         );
 
         var want = true;
@@ -90,7 +97,6 @@ public class RecordTests {
 
         // Assert
         Assert.Equal(want, got);
-        // Assert.Equal(DateTime.Now, time);
 
     }
 
