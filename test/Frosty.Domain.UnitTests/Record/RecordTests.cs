@@ -1,7 +1,50 @@
 
+using Frosty.Domain.Framework;
+using Frosty.Domain.Records;
+using Frosty.Domain.Records.Services;
+using Frosty.Domain.Shared;
+
 namespace Frosty.Domain.UnitTests.Record;
 
+internal class WebsitePingTrue : IPingWebsiteService {
+    public async Task<bool> Ping(string website) {
+        return true;
+    }
+}
+
+internal class WebsitePingFalse : IPingWebsiteService {
+    public async Task<bool> Ping(string website) {
+        return false;
+    }
+}
+
+
+internal class RecordServices {
+    private WebsitePingTrue PingTrue = new();
+    private WebsitePingFalse PingFalse = new();
+}
+
+internal static class RecordData {
+
+    public static readonly Name<Firstname> Fn = new Name<Firstname>("Kev");
+    public static readonly Name<Lastname> Ln = new Name<Lastname>("Ize");
+
+    public static readonly ContactInfo ContactInfo = new ContactInfo(Fn, Ln);
+
+
+    public static readonly Website WebsiteTrue = new Website("test.com");
+    public static readonly Website WebsiteFalse = new Website("test.com");
+
+    // public static readonly Email Email = Email.Create(
+    //     "test@gmail.com",
+    //     ContactInfo,
+
+    // );
+
+}
+
 public class RecordTests {
+
 
     [Fact]
     public void Create_Should_ReturnFailure_When_DuplicateRecordServiceFails() {
