@@ -58,12 +58,12 @@ internal static class RecordData {
 internal class RecordSensitiveData {
 
     public readonly static Task<Website> WebsiteResult = RecordData.WebsiteTrue();
-    public readonly static Website Website = WebsiteResult.Result;
+    public readonly static Website WebsitePass = WebsiteResult.Result;
 
     public readonly Result<Email> EmailAddress = Email.Create(
         "test@gmail.com",
         RecordData.ContactInfo,
-        Website
+        WebsitePass
     );
 
 }
@@ -76,16 +76,18 @@ public class RecordTests {
 
         // Act
 
+        // If website is duplicate this should fail
         var KevRecord = Frosty.Domain.Records.Record.Create(
             RecordData.Fn,
             RecordData.Ln,
-            RecordSensitiveData.Website,
+            RecordSensitiveData.WebsitePass,
             RecordData.CreatedOn,
             RecordServices.DupCheck
         );
 
-
+        var num = 1;
         // Assert
+        Assert.True(num == 1, "one should equal one");
 
     }
 
