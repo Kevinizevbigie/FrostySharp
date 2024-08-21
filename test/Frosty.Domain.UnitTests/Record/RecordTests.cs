@@ -1,3 +1,5 @@
+using Frosty.Domain.Framework;
+using Frosty.Domain.Records.Events;
 namespace Frosty.Domain.UnitTests.Records;
 
 public class RecordTests {
@@ -26,8 +28,6 @@ public class RecordTests {
     [Fact]
     public async void Create_Should_ReturnRecord_On_Success() {
 
-        // If website is duplicate this should fail
-
         // Act
         var KevRecord = await Frosty.Domain.Records.Record.Create(
             RecordData.Fn,
@@ -45,14 +45,27 @@ public class RecordTests {
     }
 
     [Fact]
-    public void Create_Should_RaiseDomainEvent_On_Success() {
+    public async void Create_Should_RaiseDomainEvent_On_Success() {
 
         // Act
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.WebsitePass,
+            RecordData.CreatedOn,
+            RecordServices.DupCheckSucceed
+        );
 
+        var want = typeof(RecordCreatedDomainEvent);
+
+        // Get record object, get domain events list, read first value
+        // then get the type of that first value
+        var got = KevRecord._value.GetDomainEvents().First().GetType();
 
         // Assert
-
+        Assert.Equal(want, got);
     }
+
 
     // [Fact]
     // public void VerifyEmails_Should_ChangeLeadStatusToVerifed() {
