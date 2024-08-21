@@ -44,7 +44,7 @@ public sealed class Record : Entity {
     public async static Task<Result<Record>> Create(
         Name<Firstname> firstname,
         Name<Lastname> lastname,
-        Email email,
+        // BUG: Email shouldn't be required here. Removed.
         Website website,
         DateTime createDate,
         IRecordCheckDuplicateService service,
@@ -60,7 +60,7 @@ public sealed class Record : Entity {
 
         var record = new Record(
             Guid.NewGuid(),
-            new ContactInfo(firstname, lastname, email),
+            new ContactInfo(firstname, lastname),
             website,
             leadStatus,
             DateTime.UtcNow

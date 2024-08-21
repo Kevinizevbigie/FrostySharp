@@ -4,7 +4,7 @@ using Frosty.Domain.Records;
 using Frosty.Domain.Records.Services;
 using Frosty.Domain.Shared;
 
-namespace Frosty.Domain.UnitTests.Record;
+namespace Frosty.Domain.UnitTests.Records;
 
 internal class WebsitePingTrue : IPingWebsiteService {
     public async Task<bool> Ping(string website) {
@@ -18,10 +18,17 @@ internal class WebsitePingFalse : IPingWebsiteService {
     }
 }
 
+internal class DuplicateCheckService : IRecordCheckDuplicateService {
+    public async Task<bool> Check(Website website) {
+        return false;
+    }
+}
 
-internal class RecordServices {
-    private WebsitePingTrue PingTrue = new();
-    private WebsitePingFalse PingFalse = new();
+
+internal static class RecordServices {
+    internal static WebsitePingTrue PingTrue = new();
+    internal static WebsitePingFalse PingFalse = new();
+    internal static DuplicateCheckService DupCheck = new();
 }
 
 internal static class RecordData {
@@ -31,15 +38,33 @@ internal static class RecordData {
 
     public static readonly ContactInfo ContactInfo = new ContactInfo(Fn, Ln);
 
+    public async static Task<Website> WebsiteTrue() {
+        var res = await Website.Create(
+            "test.com", RecordServices.PingTrue);
 
-    public static readonly Website WebsiteTrue = new Website("test.com");
-    public static readonly Website WebsiteFalse = new Website("test.com");
+        return res._value;
+    }
 
-    // public static readonly Email Email = Email.Create(
-    //     "test@gmail.com",
-    //     ContactInfo,
+    public async static Task<Website> WebsiteFalse() {
+        var res = await Website.Create(
+            "test.com", RecordServices.PingFalse);
 
-    // );
+        return res._value;
+    }
+
+    public static readonly DateTime CreatedOn = DateTime.Now;
+}
+
+internal class RecordSensitiveData {
+
+    public readonly static Task<Website> WebsiteResult = RecordData.WebsiteTrue();
+    public readonly static Website Website = WebsiteResult.Result;
+
+    public readonly Result<Email> EmailAddress = Email.Create(
+        "test@gmail.com",
+        RecordData.ContactInfo,
+        Website
+    );
 
 }
 
@@ -49,10 +74,15 @@ public class RecordTests {
     [Fact]
     public void Create_Should_ReturnFailure_When_DuplicateRecordServiceFails() {
 
-        // Arrange
-
-
         // Act
+
+        var KevRecord = Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.Website,
+            RecordData.CreatedOn,
+            RecordServices.DupCheck
+        );
 
 
         // Assert

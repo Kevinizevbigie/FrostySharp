@@ -17,14 +17,14 @@ public sealed record Website {
 
     async public static Task<Result<Website>> Create(
         string website,
-        IPingWebsiteService<Website> service
+        IPingWebsiteService service
     ) {
 
         //TODO: Add if website is blank 
 
         var res = await service.Ping(website);
 
-        if (res.IsSuccess == false) {
+        if (res == false) {
             return Result.Failure<Website>(RecordErrors.WebsiteRejected);
         }
 

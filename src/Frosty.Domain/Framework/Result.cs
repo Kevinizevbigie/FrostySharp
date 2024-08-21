@@ -42,10 +42,10 @@ public class Result {
 
 public class Result<TVal> : Result {
 
-    public readonly TVal? _value;
+    public readonly TVal _value;
 
     protected internal Result(
-        TVal? value,
+        TVal value,
         bool isSuccess,
         Error error) : base(isSuccess, error) {
 
