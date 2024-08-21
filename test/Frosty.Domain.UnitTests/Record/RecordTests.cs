@@ -80,10 +80,9 @@ public class RecordTests {
 
     [Fact]
     public async void Create_Should_ReturnFailure_When_DuplicateRecordServiceFails() {
+        // If website is duplicate this should fail
 
         // Act
-
-        // If website is duplicate this should fail
         var KevRecord = await Frosty.Domain.Records.Record.Create(
             RecordData.Fn,
             RecordData.Ln,
@@ -100,19 +99,26 @@ public class RecordTests {
 
     }
 
-    // [Fact]
-    // public void Create_Should_ReturnRecord_On_Success() {
+    [Fact]
+    public async void Create_Should_ReturnRecord_On_Success() {
 
-    // Arrange
+        // If website is duplicate this should fail
 
+        // Act
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.WebsitePass,
+            RecordData.CreatedOn,
+            RecordServices.DupCheckSucceed
+        );
 
+        var want = typeof(Frosty.Domain.Records.Record);
+        var got = KevRecord._value.GetType();
 
-    // Act
-
-
-    // Assert
-
-    // }
+        // Assert
+        Assert.Equal(want, got);
+    }
 
     // [Fact]
     // public void Create_Should_RaiseDomainEvent_On_Success() {
