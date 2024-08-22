@@ -81,9 +81,14 @@ public sealed class Record : Entity {
         return Result.Success();
     }
 
-    public async Task VerifyEmailGuesses(
+    public async Task<Result> VerifyEmailGuesses(
         IEmailVerificationService service
     ) {
+
+        // Can only verify new records
+        if (LeadStatus != LeadStatus.WebsiteValid) {
+            return Result.Failure(RecordErrors.UnableToVarify);
+        }
 
         var verifyResponse = await service.Send(Id);
         var results = verifyResponse._value;
@@ -97,12 +102,13 @@ public sealed class Record : Entity {
         if (scanForPassed == false) {
             this.AddDomainEvent(new RejectRecordDomainEvent(Id));
             ChangeLeadStatus(LeadStatus.Rejected);
-            return;
+        return Result.Success();
         }
 
         // else, add data to EmailVerifyList and update lead status
         ChangeLeadStatus(LeadStatus.EmailVerified);
         EmailVerifyList = verifyResponse._value;
+        return Result.Success();
     }
 
 

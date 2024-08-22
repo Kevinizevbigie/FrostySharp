@@ -29,4 +29,9 @@ public static class RecordErrors {
         "Record.BlankValue",
         "The value is blank"
     );
+
+    public static Error UnableToVarify = new(
+        "Record.UnableToVarify",
+        "Cannot verify a record that is not WebsiteValid Status"
+    );
 }
