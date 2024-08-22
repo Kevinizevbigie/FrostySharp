@@ -66,25 +66,46 @@ public class RecordTests {
         Assert.Equal(want, got);
     }
 
+    [Fact]
+    public async void VerifyEmails_Should_Fail_WhenLeadStatusIsNotValid() {
+
+    }
 
     [Fact]
-    public void VerifyEmails_Should_ChangeLeadStatusToVerifed() {
+    public async void VerifyEmails_Should_Fail_WhenGuessesAreEmpty() {
+
+    }
+
+    [Fact]
+    public async void VerifyEmails_Should_ChangeLeadStatusToRejected_When_NoPasses() {
+
+        // var email = RecordSensitiveData.EmailAddress._value;
+        // Act
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.WebsitePass,
+            RecordData.CreatedOn,
+            RecordServices.DupCheckSucceed
+        );
+
+
+    }
+
+    [Fact]
+    public async void VerifyEmails_Should_ChangeLeadStatusToVerified_When_OnSuccess() {
 
         var email = RecordSensitiveData.EmailAddress._value;
 
 
     }
 
-    [Fact]
-    public void VerifyEmails_Should_AddVerifyEmailResultsToEmailVerifyList() {
 
-    }
-
-    [Fact]
-    public void AddToSendQueue_Should_RaiseDomainEvent_On_Success() {
+    // [Fact]
+    // public void AddToSendQueue_Should_RaiseDomainEvent_On_Success() {
 
 
-    }
+    // }
 
 
     // ======================================== //
