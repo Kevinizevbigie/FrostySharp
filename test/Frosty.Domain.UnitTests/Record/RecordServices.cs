@@ -46,6 +46,23 @@ internal class EmailVerifyServicePass : IEmailVerificationService {
     }
 }
 
+internal class EmailVerifyServiceFail : IEmailVerificationService {
+    public async
+        Task<Result<List<EmailVerificationResponse>>> Send(
+            Guid id, List<EmailGuess> list) {
+        var l =
+            new EmailVerificationResponse(
+                "udjeudir",
+                new EmailGuess("nice@gmail.com")
+                , EmailGuessStatus.Failed);
+
+        var alist = new List<EmailVerificationResponse>();
+
+        alist.Add(l);
+
+        return Result.Success<List<EmailVerificationResponse>>(alist);
+    }
+}
 
 internal static class RecordServices {
     internal static WebsitePingTrue PingTrue = new();
@@ -55,4 +72,5 @@ internal static class RecordServices {
     internal static DuplicateCheckServiceSuccess DupCheckSucceed = new();
 
     internal static EmailVerifyServicePass VerifyPass = new();
+    internal static EmailVerifyServiceFail VerifyFail = new();
 }

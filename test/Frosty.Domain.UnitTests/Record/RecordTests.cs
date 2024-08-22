@@ -131,21 +131,40 @@ public class RecordTests {
         Assert.Equal(want, got);
     }
 
-    // [Fact]
-    // public async void VerifyEmails_Should_ChangeLeadStatusToRejected_When_NoPasses() {
+    [Fact]
+    public async void VerifyEmails_Should_ChangeLeadStatusToRejected_When_NoPassGuesses() {
 
-    //     // var email = RecordSensitiveData.EmailAddress._value;
-    //     // Act
-    //     var KevRecord = await Frosty.Domain.Records.Record.Create(
-    //         RecordData.Fn,
-    //         RecordData.Ln,
-    //         RecordSensitiveData.WebsitePass,
-    //         RecordData.CreatedOn,
-    //         RecordServices.DupCheckSucceed
-    //     );
+        // Act
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.WebsitePass,
+            RecordData.CreatedOn,
+            RecordServices.DupCheckSucceed
+        );
 
+        var record = KevRecord._value;
+        var id = record.Id;
 
-    // }
+        // Create email
+        var email = Email.Create(
+           "test@gmail.com",
+           RecordData.ContactInfo,
+           RecordSensitiveData.WebsitePass);
+
+        // add email to record
+        record.AddEmail(email);
+
+        var service = RecordServices.VerifyFail;
+        var res = await record.VerifyEmailGuesses(service);
+
+        var want = LeadStatus.Rejected;
+        var got = record.LeadStatus;
+
+        // Assert.NotEqual(res, res);
+        Assert.Equal(want, got);
+
+    }
 
     // [Fact]
     // public async void VerifyEmails_Should_ChangeLeadStatusToVerified_When_OnSuccess() {
