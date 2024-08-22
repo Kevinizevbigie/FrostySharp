@@ -84,12 +84,24 @@ public sealed class Record : Entity {
     public async Task VerifyEmailGuesses(
         IEmailVerificationService service
     ) {
-        // TODO: within the service, I need to be able to raise
-        // a REJECT RECORD domain event. This event needs to be
-        // in the domain
-        var verifyResponse = await service.Send(Id);
-        ChangeLeadStatus(LeadStatus.EmailVerified);
 
+        var verifyResponse = await service.Send(Id);
+        var results = verifyResponse._value;
+
+        // if any emails pass, return true
+        var scanForPassed = results.Any(item =>
+            item.EmailStatus == EmailGuessStatus.Passed
+        );
+
+        // if no Passes, then reject record
+        if (scanForPassed == false) {
+            this.AddDomainEvent(new RejectRecordDomainEvent(Id));
+            ChangeLeadStatus(LeadStatus.Rejected);
+            return;
+        }
+
+        // else, add data to EmailVerifyList and update lead status
+        ChangeLeadStatus(LeadStatus.EmailVerified);
         EmailVerifyList = verifyResponse._value;
     }
 

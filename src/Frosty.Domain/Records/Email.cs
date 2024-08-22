@@ -21,7 +21,8 @@ public sealed class Email {
     }
 
 
-    // Factory
+    // TODO: Where does email verification on guesses happen?
+    // Should be here.
     public static Result<Email> Create(
         string submittedEmail,
         ContactInfo info,
