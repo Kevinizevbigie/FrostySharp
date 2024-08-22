@@ -32,6 +32,10 @@ public static class RecordErrors {
 
     public static Error UnableToVarify = new(
         "Record.UnableToVarify",
-        "Cannot verify a record that is not WebsiteValid Status"
+        "Cannot verify a record that is not WebsiteValid Status. Email or email guess list cannot be null");
+
+    public static Error VerifyListEmpty = new(
+        "Record.VerifyListEmpty",
+        "The verify list is empty. Cannot verify without a list."
     );
 }

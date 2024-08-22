@@ -14,5 +14,8 @@ namespace Frosty.Domain.Records.Services;
 // When this list is returned in the app layer, we then want to save the results to the database.
 
 public interface IEmailVerificationService {
-    public Task<Result<List<EmailVerificationResponse>>> Send(Guid id);
+    public Task<Result<List<EmailVerificationResponse>>> Send(
+        Guid id,
+        List<EmailGuess> list
+    );
 }

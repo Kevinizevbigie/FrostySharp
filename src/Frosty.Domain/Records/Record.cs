@@ -90,7 +90,17 @@ public sealed class Record : Entity {
             return Result.Failure(RecordErrors.UnableToVarify);
         }
 
-        var verifyResponse = await service.Send(Id);
+        var email = PrimaryContact.Email;
+
+        // if email guess list is blank
+        if (email?.EmailGuessList?.Count < 1) {
+            return Result.Failure(RecordErrors.VerifyListEmpty);
+        }
+
+        var verifyResponse = await service.Send(
+            Id,
+            email?.EmailGuessList);
+
         var results = verifyResponse._value;
 
         // if any emails pass, return true
@@ -102,7 +112,7 @@ public sealed class Record : Entity {
         if (scanForPassed == false) {
             this.AddDomainEvent(new RejectRecordDomainEvent(Id));
             ChangeLeadStatus(LeadStatus.Rejected);
-        return Result.Success();
+            return Result.Success();
         }
 
         // else, add data to EmailVerifyList and update lead status
