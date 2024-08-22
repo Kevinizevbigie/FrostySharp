@@ -58,6 +58,7 @@ public sealed class Record : Entity {
             return Result.Failure<Record>(RecordErrors.DuplicateWebsite);
         }
 
+
         var record = new Record(
             Guid.NewGuid(),
             new ContactInfo(firstname, lastname),
@@ -65,6 +66,8 @@ public sealed class Record : Entity {
             leadStatus,
             DateTime.UtcNow
         );
+
+        record.ChangeLeadStatus(LeadStatus.WebsiteValid);
 
         record.AddDomainEvent(new RecordCreatedDomainEvent(record.Id));
 
@@ -80,6 +83,10 @@ public sealed class Record : Entity {
 
         LeadStatus = ls;
         return Result.Success();
+    }
+
+    public void AddEmail(Result<Email> emailResult) {
+        this.PrimaryContact.Email = emailResult._value;
     }
 
     public async Task<Result> VerifyEmailGuesses(
