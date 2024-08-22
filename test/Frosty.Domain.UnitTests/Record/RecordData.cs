@@ -11,18 +11,18 @@ internal static class RecordData {
 
     public static readonly ContactInfo ContactInfo = new ContactInfo(Fn, Ln);
 
-    public async static Task<Website> WebsiteTrue() {
+    public async static Task<Result<Website>> WebsiteTrue() {
         var res = await Website.Create(
             "test.com", RecordServices.PingTrue);
 
-        return res._value;
+        return res;
     }
 
-    public async static Task<Website> WebsiteFalse() {
+    public async static Task<Result<Website>> WebsiteFalse() {
         var res = await Website.Create(
             "test.com", RecordServices.PingFalse);
 
-        return res._value;
+        return res;
     }
 
     public static readonly DateTime CreatedOn = DateTime.Now;
@@ -30,16 +30,16 @@ internal static class RecordData {
 
 internal class RecordSensitiveData {
 
-    public readonly static Task<Website> WebsiteResult = RecordData.WebsiteTrue();
-    public readonly static Website WebsitePass = WebsiteResult.Result;
+    public readonly static Task<Result<Website>> WebsiteResult = RecordData.WebsiteTrue();
+    public readonly static Result<Website> WebsitePass = WebsiteResult.Result;
 
-    public readonly static Task<Website> WebsiteResultFail = RecordData.WebsiteFalse();
-    public readonly static Website WebsiteFail = WebsiteResultFail.Result;
+    public readonly static Task<Result<Website>> WebsiteResultFail = RecordData.WebsiteFalse();
+    public readonly static Result<Website> WebsiteFail = WebsiteResultFail.Result;
 
     public static readonly Result<Email> EmailAddress = Email.Create(
         "test@gmail.com",
         RecordData.ContactInfo,
-        WebsitePass
+        WebsitePass._value
     );
 
 }

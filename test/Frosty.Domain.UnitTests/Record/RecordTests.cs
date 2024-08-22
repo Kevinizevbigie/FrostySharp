@@ -147,7 +147,7 @@ public class RecordTests {
         var email = Email.Create(
            "test@gmail.com",
            RecordData.ContactInfo,
-           RecordSensitiveData.WebsitePass);
+           RecordSensitiveData.WebsitePass._value);
 
         // add email to record
         record.AddEmail(email);
@@ -183,7 +183,7 @@ public class RecordTests {
         var email = Email.Create(
            "test@gmail.com",
            RecordData.ContactInfo,
-           RecordSensitiveData.WebsitePass);
+           RecordSensitiveData.WebsitePass._value);
 
         // add email to record
         record.AddEmail(email);
@@ -214,15 +214,26 @@ public class RecordTests {
         Assert.Equal(want, got);
 
     }
-    // Website Create new (Factory)
-    // Email Create new (Factory)
-    // Email Verify Email Address
-    // Email Create list guesses are accurate
-    // Email Create list guesses are are added to email prop
 
-    // Email verify id random id created
+    [Fact]
+    public async void Email_ReturnFailure_When_EmailStringIsInaccurate() {
 
-    // New comment created
+        // var want = ;
+        // var got = ;
+        // Assert.Equal(want, got);
+    }
+
+    [Fact]
+    public async void Comment_ReturnFailure_When_InfoIsBlank() {
+
+
+
+        // var want = ;
+        // var got = ;
+        // Assert.Equal(want, got);
+    }
+
+
     // var want = ;
     // var got = ;
     // Assert.Equal(want, got);
