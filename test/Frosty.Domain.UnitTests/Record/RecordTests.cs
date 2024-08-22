@@ -209,7 +209,7 @@ public class RecordTests {
             "test.com",
             RecordServices.PingFalse);
 
-        var want = RecordErrors.UnableToVerify;
+        var want = RecordErrors.WebsiteRejected;
         var got = pingResult.Error;
         Assert.Equal(want, got);
 
@@ -239,7 +239,7 @@ public class RecordTests {
         var res = record.AddComment("", "This person is a nice guy");
 
 
-        var want = false ;
+        var want = false;
         var got = res;
         Assert.Equal(want, got);
     }
