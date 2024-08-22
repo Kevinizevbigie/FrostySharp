@@ -249,9 +249,4 @@ public class RecordTests {
         var got = res;
         Assert.Equal(want, got);
     }
-
-
-    // var want = ;
-    // var got = ;
-    // Assert.Equal(want, got);
 }
