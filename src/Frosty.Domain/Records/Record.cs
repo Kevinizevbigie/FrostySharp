@@ -75,8 +75,9 @@ public sealed class Record : Entity {
 
         // rejected records cannot be changed.
         if (LeadStatus == LeadStatus.Rejected) {
-            Result.Failure(RecordErrors.RejectedRecord);
+            return Result.Failure(RecordErrors.RejectedRecord);
         }
+
         LeadStatus = ls;
         return Result.Success();
     }
@@ -87,7 +88,7 @@ public sealed class Record : Entity {
 
         // Can only verify new records
         if (LeadStatus != LeadStatus.WebsiteValid) {
-            return Result.Failure(RecordErrors.UnableToVarify);
+            return Result.Failure(RecordErrors.UnableToVerify);
         }
 
         var email = PrimaryContact.Email;

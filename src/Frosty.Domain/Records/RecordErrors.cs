@@ -30,8 +30,8 @@ public static class RecordErrors {
         "The value is blank"
     );
 
-    public static Error UnableToVarify = new(
-        "Record.UnableToVarify",
+    public static Error UnableToVerify = new(
+        "Record.UnableToVerify",
         "Cannot verify a record that is not WebsiteValid Status. Email or email guess list cannot be null");
 
     public static Error VerifyListEmpty = new(
