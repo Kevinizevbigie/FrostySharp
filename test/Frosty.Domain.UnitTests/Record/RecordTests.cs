@@ -226,11 +226,22 @@ public class RecordTests {
     [Fact]
     public async void Comment_ReturnFailure_When_InfoIsBlank() {
 
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.WebsitePass,
+            RecordData.CreatedOn,
+            RecordServices.DupCheckSucceed
+        );
+
+        var record = KevRecord._value;
+
+        var res = record.AddComment("", "This person is a nice guy");
 
 
-        // var want = ;
-        // var got = ;
-        // Assert.Equal(want, got);
+        var want = false ;
+        var got = res;
+        Assert.Equal(want, got);
     }
 
 
