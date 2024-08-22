@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Frosty.Domain.Records;
 using Frosty.Domain.Records.Events;
 namespace Frosty.Domain.UnitTests.Records;
@@ -101,12 +100,10 @@ public class RecordTests {
     public async void VerifyEmails_Should_Fail_WhenGuessesAreEmpty() {
 
         // Act
-        var website = RecordSensitiveData.WebsiteFail;
-
         var KevRecord = await Frosty.Domain.Records.Record.Create(
             RecordData.Fn,
             RecordData.Ln,
-            RecordSensitiveData.WebsiteFail,
+            RecordSensitiveData.WebsitePass,
             RecordData.CreatedOn,
             RecordServices.DupCheckSucceed
         );
@@ -200,18 +197,23 @@ public class RecordTests {
         Assert.Equal(want, got);
     }
 
-
-    // [Fact]
-    // public void AddToSendQueue_Should_RaiseDomainEvent_On_Success() {
-
-
-    // }
-
-
     // ======================================== //
     // Value Object Functionality Unit Tests
     // ======================================== //
 
+    [Fact]
+    public async void NewWebsite_Should_Fail_When_WebsitePingServiceFails() {
+
+
+        var pingResult = await Website.Create(
+            "test.com",
+            RecordServices.PingFalse);
+
+        var want = RecordErrors.UnableToVerify;
+        var got = pingResult.Error;
+        Assert.Equal(want, got);
+
+    }
     // Website Create new (Factory)
     // Email Create new (Factory)
     // Email Verify Email Address
@@ -221,10 +223,7 @@ public class RecordTests {
     // Email verify id random id created
 
     // New comment created
-
-    // ======================================== //
-    // Tests to add later
-    // ======================================== //
-
-    // Record rejected via domain event
+    // var want = ;
+    // var got = ;
+    // Assert.Equal(want, got);
 }
