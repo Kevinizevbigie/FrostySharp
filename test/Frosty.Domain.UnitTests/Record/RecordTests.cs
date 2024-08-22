@@ -1,4 +1,4 @@
-using Frosty.Domain.Framework;
+using Frosty.Domain.Records;
 using Frosty.Domain.Records.Events;
 namespace Frosty.Domain.UnitTests.Records;
 
@@ -69,17 +69,6 @@ public class RecordTests {
     [Fact]
     public async void VerifyEmails_Should_Fail_WhenLeadStatusIsNotValid() {
 
-    }
-
-    [Fact]
-    public async void VerifyEmails_Should_Fail_WhenGuessesAreEmpty() {
-
-    }
-
-    [Fact]
-    public async void VerifyEmails_Should_ChangeLeadStatusToRejected_When_NoPasses() {
-
-        // var email = RecordSensitiveData.EmailAddress._value;
         // Act
         var KevRecord = await Frosty.Domain.Records.Record.Create(
             RecordData.Fn,
@@ -89,16 +78,49 @@ public class RecordTests {
             RecordServices.DupCheckSucceed
         );
 
+        // Need to change lead status to website success
+
+        var record = KevRecord._value;
+        var id = record.Id;
+
+        var service = RecordServices.VerifyPass;
+        var res = await record.VerifyEmailGuesses(service);
+
+        var want = RecordErrors.UnableToVerify;
+        var got = res.Error;
+
+        Assert.Equal(want, got);
 
     }
 
-    [Fact]
-    public async void VerifyEmails_Should_ChangeLeadStatusToVerified_When_OnSuccess() {
+    // [Fact]
+    // public async void VerifyEmails_Should_Fail_WhenGuessesAreEmpty() {
 
-        var email = RecordSensitiveData.EmailAddress._value;
+    // }
+
+    // [Fact]
+    // public async void VerifyEmails_Should_ChangeLeadStatusToRejected_When_NoPasses() {
+
+    //     // var email = RecordSensitiveData.EmailAddress._value;
+    //     // Act
+    //     var KevRecord = await Frosty.Domain.Records.Record.Create(
+    //         RecordData.Fn,
+    //         RecordData.Ln,
+    //         RecordSensitiveData.WebsitePass,
+    //         RecordData.CreatedOn,
+    //         RecordServices.DupCheckSucceed
+    //     );
 
 
-    }
+    // }
+
+    // [Fact]
+    // public async void VerifyEmails_Should_ChangeLeadStatusToVerified_When_OnSuccess() {
+
+    //     var email = RecordSensitiveData.EmailAddress._value;
+
+
+    // }
 
 
     // [Fact]

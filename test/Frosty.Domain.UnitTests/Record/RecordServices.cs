@@ -1,3 +1,4 @@
+using Frosty.Domain.Framework;
 using Frosty.Domain.Records;
 using Frosty.Domain.Records.Services;
 
@@ -27,10 +28,31 @@ internal class DuplicateCheckServiceSuccess : IRecordCheckDuplicateService {
     }
 }
 
+internal class EmailVerifyServicePass : IEmailVerificationService {
+    public async
+        Task<Result<List<EmailVerificationResponse>>> Send(
+            Guid id, List<EmailGuess> list) {
+        var l =
+            new EmailVerificationResponse(
+                "udjeudir",
+                new EmailGuess("nice@gmail.com")
+                , EmailGuessStatus.Passed);
+
+        var alist = new List<EmailVerificationResponse>();
+
+        alist.Add(l);
+
+        return Result.Success<List<EmailVerificationResponse>>(alist);
+    }
+}
+
 
 internal static class RecordServices {
     internal static WebsitePingTrue PingTrue = new();
     internal static WebsitePingFalse PingFalse = new();
+
     internal static DuplicateCheckServiceFailed DupCheckFail = new();
     internal static DuplicateCheckServiceSuccess DupCheckSucceed = new();
+
+    internal static EmailVerifyServicePass VerifyPass = new();
 }
