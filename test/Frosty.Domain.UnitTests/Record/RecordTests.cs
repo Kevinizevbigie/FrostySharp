@@ -216,11 +216,17 @@ public class RecordTests {
     }
 
     [Fact]
-    public async void Email_ReturnFailure_When_EmailStringIsInaccurate() {
+    public void Email_ReturnFailure_When_EmailStringIsInaccurate() {
 
-        // var want = ;
-        // var got = ;
-        // Assert.Equal(want, got);
+        // Create email
+        var email = Email.Create(
+           "test@gmail",
+           RecordData.ContactInfo,
+           RecordSensitiveData.WebsitePass._value);
+
+        var want = RecordErrors.BadEmail;
+        var got = email.Error;
+        Assert.Equal(want, got);
     }
 
     [Fact]
