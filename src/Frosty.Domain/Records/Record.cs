@@ -45,12 +45,18 @@ public sealed class Record : Entity {
         Name<Firstname> firstname,
         Name<Lastname> lastname,
         // BUG: Email shouldn't be required here. Removed.
-        Website website,
+        Result<Website> websiteResult,
         DateTime createDate,
         IRecordCheckDuplicateService service,
         LeadStatus leadStatus = LeadStatus.New,
         List<ContactInfo>? secondaryContacts = null
     ) {
+
+        if (websiteResult.Error == RecordErrors.WebsiteRejected) {
+            return Result.Failure<Record>(RecordErrors.WebsiteRejected);
+        }
+
+        var website = websiteResult._value;
 
         var recordCheck = await service.Check(website);
 
