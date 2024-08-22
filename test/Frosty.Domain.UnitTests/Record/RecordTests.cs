@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Frosty.Domain.Records;
 using Frosty.Domain.Records.Events;
 namespace Frosty.Domain.UnitTests.Records;
@@ -83,6 +84,9 @@ public class RecordTests {
         var record = KevRecord._value;
         var id = record.Id;
 
+        //Change lead status back to new
+        record.ChangeLeadStatus(LeadStatus.New);
+
         var service = RecordServices.VerifyPass;
         var res = await record.VerifyEmailGuesses(service);
 
@@ -93,10 +97,39 @@ public class RecordTests {
 
     }
 
-    // [Fact]
-    // public async void VerifyEmails_Should_Fail_WhenGuessesAreEmpty() {
+    [Fact]
+    public async void VerifyEmails_Should_Fail_WhenGuessesAreEmpty() {
 
-    // }
+        // Act
+        var website = RecordSensitiveData.WebsiteFail;
+
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.WebsiteFail,
+            RecordData.CreatedOn,
+            RecordServices.DupCheckSucceed
+        );
+
+        // Need to change lead status to website success
+
+        var record = KevRecord._value;
+        var id = record.Id;
+
+        // add email to record
+        record.AddEmail(RecordSensitiveData.EmailAddress);
+
+        // Clear the list
+        record.PrimaryContact.Email?.EmailGuessList?.Clear();
+
+        var service = RecordServices.VerifyPass;
+        var res = await record.VerifyEmailGuesses(service);
+
+        var want = RecordErrors.VerifyListEmpty;
+        var got = res.Error;
+
+        Assert.Equal(want, got);
+    }
 
     // [Fact]
     // public async void VerifyEmails_Should_ChangeLeadStatusToRejected_When_NoPasses() {
