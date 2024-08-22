@@ -33,7 +33,7 @@ internal class RecordSensitiveData {
     public readonly static Task<Website> WebsiteResult = RecordData.WebsiteTrue();
     public readonly static Website WebsitePass = WebsiteResult.Result;
 
-    public readonly Result<Email> EmailAddress = Email.Create(
+    public static readonly Result<Email> EmailAddress = Email.Create(
         "test@gmail.com",
         RecordData.ContactInfo,
         WebsitePass

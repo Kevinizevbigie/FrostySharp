@@ -67,47 +67,24 @@ public class RecordTests {
     }
 
 
-    // [Fact]
-    // public void VerifyEmails_Should_ChangeLeadStatusToVerifed() {
+    [Fact]
+    public void VerifyEmails_Should_ChangeLeadStatusToVerifed() {
 
-    // Arrange
-
-
-
-    // Act
+        var email = RecordSensitiveData.EmailAddress._value;
 
 
-    // Assert
+    }
 
-    // }
+    [Fact]
+    public void VerifyEmails_Should_AddVerifyEmailResultsToEmailVerifyList() {
 
-    // [Fact]
-    // public void VerifyEmails_Should_AddVerifyEmailResultsToEmailVerifyList() {
+    }
 
-    // Arrange
-
-
-
-    // Act
+    [Fact]
+    public void AddToSendQueue_Should_RaiseDomainEvent_On_Success() {
 
 
-    // Assert
-
-    // }
-
-    // [Fact]
-    // public void AddToSendQueue_Should_RaiseDomainEvent_On_Success() {
-
-    // Arrange
-
-
-
-    // Act
-
-
-    // Assert
-
-    // }
+    }
 
 
     // ======================================== //
