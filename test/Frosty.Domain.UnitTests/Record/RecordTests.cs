@@ -166,13 +166,39 @@ public class RecordTests {
 
     }
 
-    // [Fact]
-    // public async void VerifyEmails_Should_ChangeLeadStatusToVerified_When_OnSuccess() {
+    [Fact]
+    public async void VerifyEmails_Should_ChangeLeadStatusToVerified_When_OnSuccess() {
+        //TODO: Refactor duplication later
 
-    //     var email = RecordSensitiveData.EmailAddress._value;
+        // Act
+        var KevRecord = await Frosty.Domain.Records.Record.Create(
+            RecordData.Fn,
+            RecordData.Ln,
+            RecordSensitiveData.WebsitePass,
+            RecordData.CreatedOn,
+            RecordServices.DupCheckSucceed
+        );
 
+        var record = KevRecord._value;
+        var id = record.Id;
 
-    // }
+        // Create email
+        var email = Email.Create(
+           "test@gmail.com",
+           RecordData.ContactInfo,
+           RecordSensitiveData.WebsitePass);
+
+        // add email to record
+        record.AddEmail(email);
+
+        var service = RecordServices.VerifyPass;
+        var res = await record.VerifyEmailGuesses(service);
+
+        var want = LeadStatus.EmailVerified;
+        var got = record.LeadStatus;
+
+        Assert.Equal(want, got);
+    }
 
 
     // [Fact]
