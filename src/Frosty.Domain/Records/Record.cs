@@ -95,6 +95,18 @@ public sealed class Record : Entity {
         this.PrimaryContact.Email = emailResult._value;
     }
 
+    public bool AddComment(string name, string description) {
+        var comment = Comment.Create(name, description);
+
+        if (comment.Error == RecordErrors.BlankValue) {
+            return false;
+        }
+
+        Comments?.Add(comment._value);
+
+        return true;
+    }
+
     public async Task<Result> VerifyEmailGuesses(
         IEmailVerificationService service
     ) {

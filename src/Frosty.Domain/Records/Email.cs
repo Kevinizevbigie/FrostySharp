@@ -21,8 +21,6 @@ public sealed class Email {
     }
 
 
-    // TODO: Where does email verification on guesses happen?
-    // Should be here.
     public static Result<Email> Create(
         string submittedEmail,
         ContactInfo info,
@@ -31,6 +29,7 @@ public sealed class Email {
 
         Email email = new Email(submittedEmail, info, website);
 
+        // NOTE: Maybe make static?
         var emailCheck = email.VerifyEmailAddress(submittedEmail);
 
         if (emailCheck == false) {
