@@ -14,7 +14,7 @@ public class CardTests {
 
         var record = await CardData.MakeRecord();
 
-
+        // verify record
         await record.VerifyEmailGuesses(RecordServices.VerifyPass);
 
         // add dummy email email to record
@@ -58,5 +58,20 @@ public class CardTests {
     }
 
 
+    [Fact]
+    public async void AddToQueue_Should_ReturnFailure_When_InitialEmailAlreadySent() {
 
+
+
+    }
+
+    [Fact]
+    public async void AddToQueue_Should_ReturnFailure_When_Unsubscribed() {
+    }
+    [Fact]
+    public async void EmailLog_Should_BeLogged_When_SuccessfullyQueued() {
+    }
+    [Fact]
+    public async void AddToQueue_Should_ReturnSuccess() {
+    }
 }
