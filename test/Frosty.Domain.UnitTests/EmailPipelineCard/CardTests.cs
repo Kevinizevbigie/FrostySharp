@@ -61,17 +61,39 @@ public class CardTests {
     [Fact]
     public async void AddToQueue_Should_ReturnFailure_When_InitialEmailAlreadySent() {
 
+        var record = await CardData.MakeRecord();
+
+        await record.VerifyEmailGuesses(RecordServices.VerifyPass);
+
+        // add email to record
+        record.AddEmail(RecordSensitiveData.EmailAddress);
+
+        var card = EmailPipelineCard.Create(
+            record.PrimaryContact.Email?.Value,
+            record
+        );
+
+        card._value.ChangeCardStatus(CardStatus.InitialEmailSent);
 
 
+        var res = card._value.AddRecordToSendingQueue(
+            CardServices.SendingTrue
+        );
+
+        var want = CardErrors.InitialEmailAlreadySent;
+        var got = res.Error;
+
+        Assert.Equal(want, got);
+
     }
 
-    [Fact]
-    public async void AddToQueue_Should_ReturnFailure_When_Unsubscribed() {
-    }
-    [Fact]
-    public async void EmailLog_Should_BeLogged_When_SuccessfullyQueued() {
-    }
-    [Fact]
-    public async void AddToQueue_Should_ReturnSuccess() {
-    }
+    // [Fact]
+    // public async void AddToQueue_Should_ReturnFailure_When_Unsubscribed() {
+    // }
+    // [Fact]
+    // public async void EmailLog_Should_BeLogged_When_SuccessfullyQueued() {
+    // }
+    // [Fact]
+    // public async void AddToQueue_Should_ReturnSuccess() {
+    // }
 }
