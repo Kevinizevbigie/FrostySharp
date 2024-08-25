@@ -94,12 +94,10 @@ public class EmailPipelineCard : Entity {
             return Result.Failure(CardErrors.InitialEmailAlreadySent);
         }
 
-        if (RecordEntity.LeadStatus != LeadStatus.EmailVerified) {
-            return Result.Failure(CardErrors.CannotAddToSendList);
-        }
-
         if (CardStatus == CardStatus.Unsubscribed ||
-           RecordEntity.LeadStatus == LeadStatus.Rejected
+            RecordEntity.LeadStatus == LeadStatus.Rejected ||
+            CardStatus != CardStatus.ReadyToSend
+
         ) {
             return Result.Failure(CardErrors.RejectedRecord);
         }
@@ -109,12 +107,22 @@ public class EmailPipelineCard : Entity {
             return Result.Failure(CardErrors.RejectedRecord);
         }
 
-        CardStatus = CardStatus.InitialEmailSent;
-
         service.Add(RecordFirstname, RecordEmail);
+
+        CardStatus = CardStatus.InitialEmailSent;
 
         LogEmail();
 
+        return Result.Success();
+    }
+
+    public Result ChangeCardStatus(CardStatus cs) {
+
+        if (CardStatus == CardStatus.Unsubscribed) {
+            return Result.Failure(CardErrors.RejectedRecord);
+        }
+
+        CardStatus = cs;
         return Result.Success();
     }
 
