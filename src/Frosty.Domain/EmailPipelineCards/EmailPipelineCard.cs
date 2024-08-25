@@ -101,7 +101,7 @@ public class EmailPipelineCard : Entity {
             return Result.Failure(CardErrors.CannotAddToSendList);
         }
 
-        if (CardStatus == CardStatus.UnsubscribeRecord ||
+        if (CardStatus == CardStatus.Unsubscribed ||
            RecordEntity.LeadStatus == LeadStatus.Rejected
         ) {
             return Result.Failure(CardErrors.RejectedRecord);
@@ -111,6 +111,7 @@ public class EmailPipelineCard : Entity {
 
         service.Add(RecordFirstname, RecordEmail);
 
+        return Result.Success();
     }
 
 
