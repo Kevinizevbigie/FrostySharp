@@ -2,13 +2,15 @@
 <h1 align="center">Frosty</h1>
 <h3 align="center">An Email Sales System for Creative Agencies.</h3>
 
+---
+
 <p align="center" width="100%">
     <img width="33%" src="Frosty.png">
 </p>
 
 ---
 
-## What Is Frosty
+### What Is Frosty
 
 Frosty is a Email Outreach tool I build for my former marketing Agency, S2 Digital. 
 
@@ -22,7 +24,9 @@ There is a fine line between `email outreach` and `spam email`. Our agencies' re
 
 We built these deliverability ideas into Frosty.
 
-## What is this project? Is it complete?
+---
+
+### What is this project? Is it complete?
 
 Yes, and no.
 
@@ -32,7 +36,9 @@ Sadly, the impact of Covid destroyed the business. Because most of our clients w
 
 This project is a recreation of the `Domain Layer` from the original 2018 version. Which means all the improvements made after 2018 have been ignored. Because they are business secrets.
 
-## So, Why did I build this?
+---
+
+### So, Why did I build this?
 
 It's a portfolio project that shows how I:
 
@@ -46,8 +52,9 @@ It's a portfolio project that shows how I:
 
 
 
+---
 
-## Application Layer Plan
+### Application Layer Plan
 
 This project only contains the Domain Layer. If read, you may infer some of the application services. It's worth making it explicit how I intend to deal with it.
 
