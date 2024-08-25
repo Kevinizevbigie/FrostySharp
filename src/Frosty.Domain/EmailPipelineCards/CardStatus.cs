@@ -6,5 +6,4 @@ public enum CardStatus {
     InitialEmailSent = 2,
     MultipleContactsSent = 3,
     Unsubscribed = 4,
-    Rejected = 5
 }

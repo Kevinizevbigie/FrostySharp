@@ -1,4 +1,5 @@
 using Frosty.Domain.EmailPipelineCards.Events;
+using Frosty.Domain.EmailPipelineCards.Services;
 using Frosty.Domain.Framework;
 using Frosty.Domain.Records;
 
@@ -61,6 +62,7 @@ public class EmailPipelineCard : Entity {
             return Result.Failure(CardErrors.CannotAddToSendList);
         }
 
+
         // First, create an email object
         var emailResult = Email.Create(
             email,
@@ -86,20 +88,31 @@ public class EmailPipelineCard : Entity {
     // Email Sending it'self is currently managed via a RabbitMQ
     // Service. This function sets the database record to "sending mode"
     // to be picked up by FrostySender (The sending microservice)
-    public void AddRecordToSendingQueue() {
+    public Result AddRecordToSendingQueue(IAddToSendQueueService service) {
         // Function - Send Email
-        // if emailverified, continue
-        // if record rejected, do not continue
-        // if email counter is 0, continue
+        if (EmailCounter > 0 ||
+            CardStatus == CardStatus.InitialEmailSent
+        ) {
+            // cannot send initial email -- already sent
+            return Result.Failure(CardErrors.InitialEmailAlreadySent);
+        }
 
-        // service required to add to rabbit mq
-    }
+        if (RecordEntity.LeadStatus != LeadStatus.EmailVerified) {
+            return Result.Failure(CardErrors.CannotAddToSendList);
+        }
 
-    private void FirstEmailSentStatusChange() {
+        if (CardStatus == CardStatus.UnsubscribeRecord ||
+           RecordEntity.LeadStatus == LeadStatus.Rejected
+        ) {
+            return Result.Failure(CardErrors.RejectedRecord);
+        }
+
         CardStatus = CardStatus.InitialEmailSent;
 
-        AddDomainEvent(new InitialEmailSentDomainEvent(Id));
+        service.Add(RecordFirstname, RecordEmail);
+
     }
+
 
     // Directly used by application service
     public void UnsubscribeRecord() {
@@ -107,6 +120,10 @@ public class EmailPipelineCard : Entity {
 
         AddDomainEvent(new UnsubscribedContactDomainEvent(Id));
     }
+
+
+    // log email function - log date and time when email was sent
+    // and increase email counter
 
 }
 

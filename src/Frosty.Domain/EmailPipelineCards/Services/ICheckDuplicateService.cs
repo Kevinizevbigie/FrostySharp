@@ -1,6 +1,5 @@
-
 namespace Frosty.Domain.EmailPipelineCards.Services;
 
-public interface CheckDuplicateService {
+public interface ICheckDuplicateService {
     public bool Search(Guid recordid);
 }
