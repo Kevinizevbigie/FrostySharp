@@ -36,6 +36,8 @@ public sealed class Email {
             return Result.Failure<Email>(RecordErrors.BadEmail);
         }
 
+        email.Value = submittedEmail;
+
         return Result.Success<Email>(email);
     }
 

@@ -20,7 +20,6 @@ public class EmailPipelineCard : Entity {
             // return exception
         }
 
-
         RecordEntity = record;
     }
 
@@ -39,9 +38,16 @@ public class EmailPipelineCard : Entity {
     public int? EmailCounter { get; private set; }
 
 
+    public EmailPipelineCard Create(string primaryEmailSubmission,
+                                    Record record) {
 
-    public EmailPipelineCard Create(Record record) {
-        return new EmailPipelineCard(Guid.NewGuid(), record);
+        MakeRecordReadyToSend(primaryEmailSubmission, record);
+
+        var pipelineCard = new EmailPipelineCard(Guid.NewGuid(), record);
+
+        pipelineCard.AddDomainEvent(new ReadyToSendDomainEvent(record.Id));
+
+        return pipelineCard;
     }
 
     // Users manually look through verifiedemailguesses and decide
@@ -63,9 +69,15 @@ public class EmailPipelineCard : Entity {
 
         // Add Email to record
         record.AddEmail(emailResult);
+        // add verified email to Card
+        RecordEmail = record.PrimaryContact.Email?.Value;
+        RecordFirstname = record.PrimaryContact.Firstname.Value;
 
         // set initial card status
         CardStatus = CardStatus.ReadyToSend;
+
+        // Domain event - make ready to send, this will persis the
+        // changes to the record in the DB
     }
 
     // Email Sending it'self is currently managed via a RabbitMQ

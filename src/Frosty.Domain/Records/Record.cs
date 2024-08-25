@@ -44,7 +44,6 @@ public sealed class Record : Entity {
     public async static Task<Result<Record>> Create(
         Name<Firstname> firstname,
         Name<Lastname> lastname,
-        // BUG: Email shouldn't be required here. Removed.
         Result<Website> websiteResult,
         DateTime createDate,
         IRecordCheckDuplicateService service,
