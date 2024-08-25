@@ -21,19 +21,17 @@ public class EmailPipelineCard : Entity {
         }
 
 
-        RecordId = record.Id;
-        // RecordFirstname = record.PrimaryContact.Firstname;
-        // RecordEmail = record.PrimaryContact.Email;
+        RecordEntity = record;
     }
 
-    public Guid RecordId { get; private set; }
+    public Record RecordEntity { get; private set; }
     public string? RecordFirstname { get; private set; }
     public string? RecordEmail { get; private set; }
 
     public DateTime AddedToPipelineUtc { get; private set; }
     public DateTime RemovedToPipelineUtc { get; private set; }
 
-    public SendingAccount PrimarySendingAccount { get; private set; }
+    // public SendingAccount PrimarySendingAccount { get; private set; }
 
     public CardStatus CardStatus { get; private set; }
 
@@ -43,8 +41,6 @@ public class EmailPipelineCard : Entity {
 
 
     public EmailPipelineCard Create(Record record) {
-
-
         return new EmailPipelineCard(Guid.NewGuid(), record);
     }
 
@@ -72,13 +68,16 @@ public class EmailPipelineCard : Entity {
         CardStatus = CardStatus.ReadyToSend;
     }
 
-    // 
+    // Email Sending it'self is currently managed via a RabbitMQ
+    // Service. This function sets the database record to "sending mode"
+    // to be picked up by FrostySender (The sending microservice)
     public void AddRecordToSendingQueue() {
         // Function - Send Email
         // if emailverified, continue
         // if record rejected, do not continue
         // if email counter is 0, continue
 
+        // service required to add to rabbit mq
     }
 
 
