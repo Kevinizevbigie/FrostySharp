@@ -75,7 +75,6 @@ public class CardTests {
 
         card._value.ChangeCardStatus(CardStatus.InitialEmailSent);
 
-
         var res = card._value.AddRecordToSendingQueue(
             CardServices.SendingTrue
         );
@@ -84,12 +83,35 @@ public class CardTests {
         var got = res.Error;
 
         Assert.Equal(want, got);
-
     }
 
-    // [Fact]
-    // public async void AddToQueue_Should_ReturnFailure_When_Unsubscribed() {
-    // }
+    [Fact]
+    public async void AddToQueue_Should_ReturnFailure_When_Unsubscribed() {
+
+        var record = await CardData.MakeRecord();
+
+        await record.VerifyEmailGuesses(RecordServices.VerifyPass);
+
+        // add email to record
+        record.AddEmail(RecordSensitiveData.EmailAddress);
+
+        var card = EmailPipelineCard.Create(
+            record.PrimaryContact.Email?.Value,
+            record
+        );
+
+        card._value.ChangeCardStatus(CardStatus.Unsubscribed);
+
+        var res = card._value.AddRecordToSendingQueue(
+            CardServices.SendingTrue
+        );
+
+        var want = CardErrors.RejectedRecord;
+        var got = res.Error;
+
+        Assert.Equal(want, got);
+    }
+
     // [Fact]
     // public async void EmailLog_Should_BeLogged_When_SuccessfullyQueued() {
     // }
