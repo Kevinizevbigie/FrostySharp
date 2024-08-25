@@ -53,10 +53,8 @@ public class EmailPipelineCard : Entity {
         return Result.Success<EmailPipelineCard>(pipelineCard);
     }
 
-    // Users manually look through verifiedemailguesses and decide
-    // which email to add to the primary record
-    // this is because we want to ensure email deliverability by
-    // adding the verified email we want.
+    // There will be one service for AddEmail function in the record
+    // This function will read that email from the record after that.
     private Result MakeRecordReadyToSend(Record record) {
 
         // VERIFICATION
