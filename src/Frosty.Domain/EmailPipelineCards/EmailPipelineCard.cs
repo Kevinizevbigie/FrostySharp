@@ -40,13 +40,18 @@ public class EmailPipelineCard : Entity {
     public List<EmailLog>? EmailLogs { get; private set; }
     public int? EmailCounter { get; private set; }
 
-    // Function - Send Email
-    // if emailverified, continue
 
 
-    // public void MakeAccountReadyToSend() {
-        
-    // }
+
+    public void SendEmail() {
+        // Function - Send Email
+        // if emailverified, continue
+        // if record rejected, do not continue
+        // if email counter is 0, continue
+
+    }
+
+
 
     public void FirstEmailSentStatusChange() {
         CardStatus = CardStatus.InitialEmailSent;
@@ -55,7 +60,10 @@ public class EmailPipelineCard : Entity {
 
     }
 
-    public void RemoveRecordFromSendingList() {
+    // public void MakeAccountReadyToSend() {
+    // }
+
+    public void UnsubscribeRecord() {
         CardStatus = CardStatus.Unsubscribed;
 
         AddDomainEvent(new UnsubscribedContactDomainEvent(Id));
