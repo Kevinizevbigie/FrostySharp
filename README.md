@@ -62,7 +62,6 @@ Here is what it looks like (2019 version):
     <img width="66%" src="ProductionSystem.png">
 </p>
 
-
 ---
 
 ### Application Layer Plan
@@ -76,3 +75,12 @@ For example `GetRecordQuery` is a query that will be in the `Frosty.Application.
 These folders will have the query/command and their respective handler.
 
 Having a long list of use-case based folders makes it very easy to find, edit and extend specific features.
+
+---
+
+### Domain Planning & Functional Spec
+
+These two documents are available on request:
+
+    - Domain Planning Documentation: A first look into the domain, the entities and how they fit together.
+    - Functional Specification: A first look at the usecases.
