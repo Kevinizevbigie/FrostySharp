@@ -54,11 +54,12 @@ public class EmailPipelineCard : Entity {
     // which email to add to the primary record
     // this is because we want to ensure email deliverability by
     // adding the verified email we want.
-    private void MakeRecordReadyToSend(string email, Record record) {
+    private Result MakeRecordReadyToSend(string email, Record record) {
 
         // VERIFICATION
-        // If lead status in verified
-        // else failed CardErrors.NotVerified
+        if (record.LeadStatus != LeadStatus.EmailVerified) {
+            return Result.Failure(CardErrors.CannotAddToSendList);
+        }
 
         // First, create an email object
         var emailResult = Email.Create(
@@ -92,16 +93,14 @@ public class EmailPipelineCard : Entity {
         // service required to add to rabbit mq
     }
 
-
-
-    public void FirstEmailSentStatusChange() {
+    private void FirstEmailSentStatusChange() {
         CardStatus = CardStatus.InitialEmailSent;
 
         AddDomainEvent(new InitialEmailSentDomainEvent(Id));
 
     }
 
-
+    // Directly used by application service
     public void UnsubscribeRecord() {
         CardStatus = CardStatus.Unsubscribed;
 
