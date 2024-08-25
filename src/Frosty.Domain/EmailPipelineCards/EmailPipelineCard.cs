@@ -34,10 +34,14 @@ public class EmailPipelineCard : Entity {
     public int EmailCounter { get; private set; }
 
 
-    public EmailPipelineCard Create(string primaryEmailSubmission,
+    public Result<EmailPipelineCard> Create(string primaryEmailSubmission,
                                     Record record) {
 
-        MakeRecordReadyToSend(primaryEmailSubmission, record);
+        var res = MakeRecordReadyToSend(primaryEmailSubmission, record);
+
+        if (res.IsSuccess == false) {
+            return Result.Failure<EmailPipelineCard>(res.Error);
+        }
 
         var pipelineCard = new EmailPipelineCard(Guid.NewGuid(), record);
 
@@ -45,7 +49,7 @@ public class EmailPipelineCard : Entity {
 
         EmailCounter = 0;
 
-        return pipelineCard;
+        return Result.Success<EmailPipelineCard>(pipelineCard);
     }
 
     // Users manually look through verifiedemailguesses and decide
@@ -72,11 +76,7 @@ public class EmailPipelineCard : Entity {
         RecordEmail = record.PrimaryContact.Email?.Value;
         RecordFirstname = record.PrimaryContact.Firstname.Value;
 
-        // set initial card status
         CardStatus = CardStatus.ReadyToSend;
-
-        // Domain event - make ready to send, this will persis the
-        // changes to the record in the DB
 
         return Result.Success();
     }
@@ -117,8 +117,6 @@ public class EmailPipelineCard : Entity {
         return Result.Success();
     }
 
-
-    // Directly used by application service
     public void UnsubscribeRecord() {
         CardStatus = CardStatus.Unsubscribed;
 
