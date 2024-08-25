@@ -50,6 +50,17 @@ It's a portfolio project that shows how I:
 - And how I refactor unit tests
 - How I plan ahead for Application services
 
+---
+
+### What does the production system look like?
+
+The production version of Frosty (written in TypeScript MVC) lived on the company services. It was not a publicly available software. We built it around our own sales system, and that of our clients.
+
+Here is what it looks like (2019 version):
+
+<p align="center" width="100%">
+    <img width="66%" src="ProductionSystem.png">
+</p>
 
 
 ---
