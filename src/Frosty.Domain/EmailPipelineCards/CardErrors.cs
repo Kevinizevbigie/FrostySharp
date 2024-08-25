@@ -15,7 +15,7 @@ public static class CardErrors {
         "This record is rejected and therefore cannot be emailed"
     );
 
-    public static Error InitialEmailAlreadySent = new (
+    public static Error InitialEmailAlreadySent = new(
         "Record.InitialEmailAlreadySent",
         "This record has already sent an initial email"
     );

@@ -35,8 +35,9 @@ public class EmailPipelineCard : Entity {
 
     public CardStatus CardStatus { get; private set; }
 
-    public List<EmailLog>? EmailLogs { get; private set; }
-    public int? EmailCounter { get; private set; }
+    public List<EmailLog> EmailLogs = new();
+
+    public int EmailCounter { get; private set; }
 
 
     public EmailPipelineCard Create(string primaryEmailSubmission,
@@ -47,6 +48,8 @@ public class EmailPipelineCard : Entity {
         var pipelineCard = new EmailPipelineCard(Guid.NewGuid(), record);
 
         pipelineCard.AddDomainEvent(new ReadyToSendDomainEvent(record.Id));
+
+        EmailCounter = 0;
 
         return pipelineCard;
     }
@@ -61,7 +64,6 @@ public class EmailPipelineCard : Entity {
         if (record.LeadStatus != LeadStatus.EmailVerified) {
             return Result.Failure(CardErrors.CannotAddToSendList);
         }
-
 
         // First, create an email object
         var emailResult = Email.Create(
@@ -111,6 +113,8 @@ public class EmailPipelineCard : Entity {
 
         service.Add(RecordFirstname, RecordEmail);
 
+        LogEmail();
+
         return Result.Success();
     }
 
@@ -125,6 +129,16 @@ public class EmailPipelineCard : Entity {
 
     // log email function - log date and time when email was sent
     // and increase email counter
+
+    // public List<EmailLog> EmailLogs = new();
+
+    // public int EmailCounter { get; private set; }
+
+    private void LogEmail() {
+        var log = new EmailLog(DateTime.Now);
+        EmailLogs.Add(log);
+        EmailCounter++;
+    }
 
 }
 
