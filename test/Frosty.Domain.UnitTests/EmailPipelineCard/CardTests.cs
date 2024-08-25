@@ -112,10 +112,27 @@ public class CardTests {
         Assert.Equal(want, got);
     }
 
-    // [Fact]
-    // public async void EmailLog_Should_BeLogged_When_SuccessfullyQueued() {
-    // }
-    // [Fact]
-    // public async void AddToQueue_Should_ReturnSuccess() {
-    // }
+    [Fact]
+    public async void EmailLog_Should_BeLogged_When_SuccessfullyQueued() {
+        var record = await CardData.MakeRecord();
+
+        await record.VerifyEmailGuesses(RecordServices.VerifyPass);
+
+        // add email to record
+        record.AddEmail(RecordSensitiveData.EmailAddress);
+
+        var card = EmailPipelineCard.Create(
+            record.PrimaryContact.Email?.Value,
+            record
+        );
+
+        var res = card._value.AddRecordToSendingQueue(
+            CardServices.SendingTrue
+        );
+
+        var want = 1;
+        var got = card._value.EmailLogs.Count();
+        Assert.NotEqual(want, got);
+
+    }
 }
