@@ -79,6 +79,8 @@ public class EmailPipelineCard : Entity {
 
         // Domain event - make ready to send, this will persis the
         // changes to the record in the DB
+
+        return Result.Success();
     }
 
     // Email Sending it'self is currently managed via a RabbitMQ
@@ -97,7 +99,6 @@ public class EmailPipelineCard : Entity {
         CardStatus = CardStatus.InitialEmailSent;
 
         AddDomainEvent(new InitialEmailSentDomainEvent(Id));
-
     }
 
     // Directly used by application service
