@@ -33,25 +33,20 @@ public class EmailPipelineCard : Entity {
     public DateTime AddedToPipelineUtc { get; private set; }
     public DateTime RemovedToPipelineUtc { get; private set; }
 
+    public SendingAccount PrimarySendingAccount { get; private set; }
+
     public CardStatus CardStatus { get; private set; }
 
     public List<EmailLog>? EmailLogs { get; private set; }
     public int? EmailCounter { get; private set; }
 
-    // will run via event handler
-    // TODO: I need a way to prevent a duplicate card
-    // inside repository for EmailPipelineCard 
-    // In command, we check for duplicate before we run "add to pipeline"
-    // return result - failure or success
-    public void AddToPipeline(Guid recordId) {
+    // Function - Send Email
+    // if emailverified, continue
 
-        if (CardStatus == CardStatus.Rejected) {
-            // return exception/error
-        }
 
-        AddedToPipelineUtc = DateTime.UtcNow;
-        CardStatus = CardStatus.ReadyToSend;
-    }
+    // public void MakeAccountReadyToSend() {
+        
+    // }
 
     public void FirstEmailSentStatusChange() {
         CardStatus = CardStatus.InitialEmailSent;
