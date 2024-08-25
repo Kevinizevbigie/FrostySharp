@@ -33,21 +33,22 @@ public class EmailPipelineCard : Entity {
 
     public int EmailCounter { get; private set; }
 
+    public static Result<EmailPipelineCard> Create(
+        string primaryEmailSubmission,
+        Record record) {
 
-    public Result<EmailPipelineCard> Create(string primaryEmailSubmission,
-                                    Record record) {
+        var pipelineCard = new EmailPipelineCard(Guid.NewGuid(), record);
 
-        var res = MakeRecordReadyToSend(primaryEmailSubmission, record);
+        var res =
+            pipelineCard.MakeRecordReadyToSend(record);
 
         if (res.IsSuccess == false) {
             return Result.Failure<EmailPipelineCard>(res.Error);
         }
 
-        var pipelineCard = new EmailPipelineCard(Guid.NewGuid(), record);
-
         pipelineCard.AddDomainEvent(new ReadyToSendDomainEvent(record.Id));
 
-        EmailCounter = 0;
+        pipelineCard.EmailCounter = 0;
 
         return Result.Success<EmailPipelineCard>(pipelineCard);
     }
@@ -56,16 +57,18 @@ public class EmailPipelineCard : Entity {
     // which email to add to the primary record
     // this is because we want to ensure email deliverability by
     // adding the verified email we want.
-    private Result MakeRecordReadyToSend(string email, Record record) {
+    private Result MakeRecordReadyToSend(Record record) {
 
         // VERIFICATION
-        if (record.LeadStatus != LeadStatus.EmailVerified) {
+        if (record.LeadStatus != LeadStatus.EmailVerified ||
+            string.IsNullOrEmpty(record.PrimaryContact.Email.Value)
+        ) {
             return Result.Failure(CardErrors.CannotAddToSendList);
         }
 
         // First, create an email object
         var emailResult = Email.Create(
-            email,
+            record.PrimaryContact.Email.Value,
             record.PrimaryContact,
             record.Website
         );
