@@ -2,5 +2,4 @@
 *.csv
 bin/
 obj/
-src/Frosty.Application
-src/Frosty.Infrastructure
+src/Frosty.Api
