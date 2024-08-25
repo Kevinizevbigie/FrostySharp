@@ -1,5 +1,3 @@
-
-
 ## What Is Frosty
 
 Frosty is a Email Outreach tool I build for my former marketing Agency, S2 Digital. 
