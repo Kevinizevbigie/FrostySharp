@@ -33,3 +33,18 @@ It's a portfolio project that shows how I:
 - How I write unit tests
 - And how I refactor unit tests
 - How I plan ahead for Application services
+
+
+
+
+## Application Layer Plan
+
+This project only contains the Domain Layer. If read, you may infer some of the application services. It's worth making it explicit how I intend to deal with it.
+
+The application layer will use `MediatR` to create the CQRS pattern. There will be `queries`, `query handlers`, `commands`, and `command handlers`. Each query and command will live in a use-case specific folder. 
+
+For example `GetRecordQuery` is a query that will be in the `Frosty.Application.Record.GetRecord` namespace and folder. Equally, the command `AddToSalesPipelineCommand` will be in `Frosty.Application.Record.AddToPipeline` namespace and folder.
+
+These folders will have the query/command and their respective handler.
+
+Having a long list of use-case based folders makes it very easy to find, edit and extend specific features.
