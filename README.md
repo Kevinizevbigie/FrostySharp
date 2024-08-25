@@ -1,8 +1,12 @@
 
+<h1 align="center">Frosty</h1>
+<h3 align="center">An Email Sales System for Creative Agencies.</h3>
+
 <p align="center" width="100%">
     <img width="33%" src="Frosty.png">
 </p>
 
+---
 
 ## What Is Frosty
 
