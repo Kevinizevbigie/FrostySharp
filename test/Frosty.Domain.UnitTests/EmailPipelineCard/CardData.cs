@@ -1,4 +1,5 @@
 
+using Frosty.Domain.EmailPipelineCards;
 using Frosty.Domain.Framework;
 using Frosty.Domain.Records;
 using Frosty.Domain.Shared;
@@ -28,4 +29,11 @@ internal class CardData {
     }
 
 
+    public static Result<EmailPipelineCard> MakeCard(
+        Frosty.Domain.Records.Record record,
+        string email
+    ) {
+
+        return EmailPipelineCard.Create(email, record);
+    }
 }
