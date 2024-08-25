@@ -42,8 +42,38 @@ public class EmailPipelineCard : Entity {
 
 
 
+    public EmailPipelineCard Create(Record record) {
 
-    public void SendEmail() {
+
+        return new EmailPipelineCard(Guid.NewGuid(), record);
+    }
+
+    // Users manually look through verifiedemailguesses and decide
+    // which email to add to the primary record
+    // this is because we want to ensure email deliverability by
+    // adding the verified email we want.
+    private void MakeRecordReadyToSend(string email, Record record) {
+
+        // VERIFICATION
+        // If lead status in verified
+        // else failed CardErrors.NotVerified
+
+        // First, create an email object
+        var emailResult = Email.Create(
+            email,
+            record.PrimaryContact,
+            record.Website
+        );
+
+        // Add Email to record
+        record.AddEmail(emailResult);
+
+        // set initial card status
+        CardStatus = CardStatus.ReadyToSend;
+    }
+
+    // 
+    public void AddRecordToSendingQueue() {
         // Function - Send Email
         // if emailverified, continue
         // if record rejected, do not continue
@@ -60,8 +90,6 @@ public class EmailPipelineCard : Entity {
 
     }
 
-    // public void MakeAccountReadyToSend() {
-    // }
 
     public void UnsubscribeRecord() {
         CardStatus = CardStatus.Unsubscribed;
