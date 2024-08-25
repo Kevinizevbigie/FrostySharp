@@ -16,10 +16,6 @@ public class EmailPipelineCard : Entity {
         Record record
     ) : base(id) {
 
-        if (record.PrimaryContact.Email == null ||
-            record.PrimaryContact.Firstname == null) {
-            // return exception
-        }
 
         RecordEntity = record;
     }
@@ -30,8 +26,6 @@ public class EmailPipelineCard : Entity {
 
     public DateTime AddedToPipelineUtc { get; private set; }
     public DateTime RemovedToPipelineUtc { get; private set; }
-
-    // public SendingAccount PrimarySendingAccount { get; private set; }
 
     public CardStatus CardStatus { get; private set; }
 
@@ -109,6 +103,11 @@ public class EmailPipelineCard : Entity {
             return Result.Failure(CardErrors.RejectedRecord);
         }
 
+        if (RecordEmail == null ||
+            RecordFirstname == null) {
+            return Result.Failure(CardErrors.RejectedRecord);
+        }
+
         CardStatus = CardStatus.InitialEmailSent;
 
         service.Add(RecordFirstname, RecordEmail);
@@ -125,14 +124,6 @@ public class EmailPipelineCard : Entity {
 
         AddDomainEvent(new UnsubscribedContactDomainEvent(Id));
     }
-
-
-    // log email function - log date and time when email was sent
-    // and increase email counter
-
-    // public List<EmailLog> EmailLogs = new();
-
-    // public int EmailCounter { get; private set; }
 
     private void LogEmail() {
         var log = new EmailLog(DateTime.Now);
