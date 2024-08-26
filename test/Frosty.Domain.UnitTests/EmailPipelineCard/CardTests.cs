@@ -132,7 +132,7 @@ public class CardTests {
 
         var want = 1;
         var got = card._value.EmailLogs.Count();
-        Assert.NotEqual(want, got);
+        Assert.Equal(want, got);
 
     }
 }
