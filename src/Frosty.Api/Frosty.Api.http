@@ -1,0 +1,6 @@
+@Frosty.Api_HostAddress = http://localhost:5281
+
+GET {{Frosty.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
