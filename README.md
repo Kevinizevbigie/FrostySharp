@@ -82,5 +82,5 @@ Having a long list of use-case based folders makes it very easy to find, edit an
 
 These two documents are available on request:
 
-    - Domain Planning Documentation: A first look into the domain, the entities and how they fit together.
-    - Functional Specification: A first look at the usecases.
+- Domain Planning Documentation: A first look into the domain, the entities and how they fit together.
+- Functional Specification: A first look at the usecases.
